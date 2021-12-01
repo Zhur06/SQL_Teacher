@@ -4,10 +4,22 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs;
+  Dialogs, StdCtrls, ExtCtrls, DB, DBTables;
 
 type
   TForm1 = class(TForm)
+    GroupBox1: TGroupBox;
+    Button1: TButton;
+    GroupBox2: TGroupBox;
+    Panel1: TPanel;
+    GroupBox3: TGroupBox;
+    GroupBox4: TGroupBox;
+    Memo1: TMemo;
+    Button2: TButton;
+    GroupBox5: TGroupBox;
+    Panel2: TPanel;
+    Panel3: TPanel;
+    Table1: TTable;
   private
     { Private declarations }
   public
@@ -22,4 +34,3 @@ implementation
 {$R *.dfm}
 
 end.
- 

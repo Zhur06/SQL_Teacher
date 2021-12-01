@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 277
-  Top = 125
+  Left = 360
+  Top = 143
   Width = 1218
   Height = 814
   Anchors = [akRight, akBottom]
@@ -88,14 +88,6 @@ object Form1: TForm1
       Align = alClient
       Caption = '  '#1056#1077#1079#1091#1083#1100#1090#1072#1090'  '
       TabOrder = 2
-      object Panel2: TPanel
-        Left = 320
-        Top = 216
-        Width = 369
-        Height = 57
-        Caption = #1042' '#1101#1090#1086#1084' '#1087#1088#1086#1089#1090#1088#1072#1085#1089#1090#1074#1077' '#1073#1091#1076#1077#1090' '#1088#1077#1079#1091#1083#1100#1090#1072#1090' SQL '#1082#1086#1084#1072#1085#1076#1099
-        TabOrder = 0
-      end
       object Panel3: TPanel
         Left = 2
         Top = 464
@@ -103,7 +95,21 @@ object Form1: TForm1
         Height = 76
         Align = alBottom
         Caption = #1047#1076#1077#1089#1100' '#1073#1091#1076#1077#1090' '#1088#1077#1079#1091#1083#1100#1090#1072#1090' '#1087#1088#1086#1074#1077#1088#1082#1080' ('#1042#1077#1088#1085#1086'/'#1053#1077#1042#1077#1088#1085#1086')'
+        TabOrder = 0
+      end
+      object DBGrid1: TDBGrid
+        Left = 2
+        Top = 18
+        Width = 1007
+        Height = 446
+        Align = alClient
+        DataSource = DataSource1
         TabOrder = 1
+        TitleFont.Charset = DEFAULT_CHARSET
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -13
+        TitleFont.Name = 'MS Sans Serif'
+        TitleFont.Style = []
       end
     end
   end
@@ -129,5 +135,28 @@ object Form1: TForm1
       Caption = '1'
       TabOrder = 0
     end
+  end
+  object Table1: TTable
+    Active = True
+    DatabaseName = 'zhur_test'
+    TableName = 'zhur_test'
+    Left = 47
+    Top = 16
+  end
+  object Database_test: TDatabase
+    Connected = True
+    DatabaseName = 'zhur_test'
+    LoginPrompt = False
+    Params.Strings = (
+      'USER NAME=root')
+    ReadOnly = True
+    SessionName = 'Default'
+    Left = 10
+    Top = 18
+  end
+  object DataSource1: TDataSource
+    DataSet = Table1
+    Left = 82
+    Top = 18
   end
 end
