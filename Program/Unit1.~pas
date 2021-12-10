@@ -1,0 +1,60 @@
+unit Unit1;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, ExtCtrls, DB, DBTables, Grids, DBGrids, MemDS,
+  DBAccess, MyAccess, MyEmbConnection;
+
+type
+  TForm1 = class(TForm)
+    GroupBox1: TGroupBox;
+    Button1: TButton;
+    GroupBox2: TGroupBox;
+    Panel1: TPanel;
+    GroupBox3: TGroupBox;
+    GroupBox4: TGroupBox;
+    Memo1: TMemo;
+    goBtn: TButton;
+    GroupBox5: TGroupBox;
+    Panel3: TPanel;
+    DataSource1: TDataSource;
+    DBGrid1: TDBGrid;
+    MyEmbConnection1: TMyEmbConnection;
+    MyQuery1: TMyQuery;
+    procedure FormCreate(Sender: TObject);
+    procedure goBtnClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+{$R *.dfm}
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  goBtn.Left := GroupBox3.Width - goBtn.Width - 5;
+end;
+
+procedure TForm1.goBtnClick(Sender: TObject);
+begin
+with MyQuery1 do
+begin
+  Close;
+  SQL.AddStrings(Memo1.Lines);
+  ExecSQL;
+
+  Close;
+  SQL.Text := 'SELECT * FROM DB_TEST.TEST_TABLE';
+  Open;
+end;
+end;
+
+end.
