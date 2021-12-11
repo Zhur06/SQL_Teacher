@@ -1,8 +1,8 @@
-CREATE DATABASE Computer;
+CREATE DATABASE IF NOT EXISTS Computer;
 
 USE Computer;
 
-CREATE TABLE Laptop (
+CREATE TABLE IF NOT EXISTS Laptop (
 	code int NOT NULL ,
 	model varchar (50) NOT NULL ,
 	speed smallint NOT NULL ,
@@ -12,7 +12,7 @@ CREATE TABLE Laptop (
 	screen tinyint NOT NULL 
 ); 
 
-CREATE TABLE PC (
+CREATE TABLE IF NOT EXISTS PC (
 	code int NOT NULL ,
 	model varchar (50) NOT NULL ,
 	speed smallint NOT NULL ,
@@ -23,14 +23,14 @@ CREATE TABLE PC (
 ); 
 
 
-CREATE TABLE Product (
+CREATE TABLE IF NOT EXISTS Product (
 	maker varchar (10) NOT NULL ,
 	model varchar (50) NOT NULL ,
 	type varchar (50) NOT NULL 
 ); 
 
 
-CREATE TABLE Printer (
+CREATE TABLE IF NOT EXISTS Printer (
 	code int NOT NULL ,
 	model varchar (50) NOT NULL ,
 	color char (1) NOT NULL ,
@@ -39,35 +39,35 @@ CREATE TABLE Printer (
 ); 
 
 
-ALTER TABLE Laptop ADD 
+ALTER TABLE IF NOT EXISTS Laptop ADD 
 	CONSTRAINT PK_Laptop PRIMARY KEY 
 	(
 		code
 	);   
 
 
-ALTER TABLE PC ADD 
+ALTER TABLE IF NOT EXISTS PC ADD 
 	CONSTRAINT PK_pc PRIMARY KEY 
 	(
 		code
 	);   
 
 
-ALTER TABLE Product ADD 
+ALTER TABLE IF NOT EXISTS Product ADD 
 	CONSTRAINT PK_product PRIMARY KEY 
 	(
 		model
 	);   
 
 
-ALTER TABLE Printer ADD 
+ALTER TABLE IF NOT EXISTS Printer ADD 
 	CONSTRAINT PK_printer PRIMARY KEY 
 	(
 		code
 	);   
 
 
-ALTER TABLE Laptop ADD 
+ALTER TABLE IF NOT EXISTS Laptop ADD 
 	CONSTRAINT FK_Laptop_product FOREIGN KEY 
 	(
 		model
@@ -76,7 +76,7 @@ ALTER TABLE Laptop ADD
 	);
 
 
-ALTER TABLE PC ADD 
+ALTER TABLE IF NOT EXISTS PC ADD 
 	CONSTRAINT FK_pc_product FOREIGN KEY 
 	(
 		model
@@ -85,7 +85,7 @@ ALTER TABLE PC ADD
 	);
 
 
-ALTER TABLE Printer ADD 
+ALTER TABLE IF NOT EXISTS Printer ADD 
 	CONSTRAINT FK_printer_product FOREIGN KEY 
 	(
 		model

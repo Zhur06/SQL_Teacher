@@ -1,10 +1,9 @@
 object Form1: TForm1
-  Left = 440
-  Top = 236
+  Left = 453
+  Top = 166
   Width = 1218
   Height = 775
-  Align = alClient
-  Caption = 'Form1'
+  Caption = 'SQLTeacher'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -38,7 +37,7 @@ object Form1: TForm1
     TabOrder = 0
     object Splitter1: TSplitter
       Left = 2
-      Top = 131
+      Top = 193
       Width = 985
       Height = 3
       Cursor = crVSplit
@@ -47,7 +46,7 @@ object Form1: TForm1
     end
     object Splitter2: TSplitter
       Left = 2
-      Top = 297
+      Top = 359
       Width = 985
       Height = 3
       Cursor = crVSplit
@@ -56,7 +55,7 @@ object Form1: TForm1
     end
     object GroupBox3: TGroupBox
       Left = 2
-      Top = 134
+      Top = 196
       Width = 985
       Height = 163
       Align = alTop
@@ -87,7 +86,7 @@ object Form1: TForm1
       Left = 2
       Top = 18
       Width = 985
-      Height = 113
+      Height = 175
       Align = alTop
       BiDiMode = bdLeftToRight
       Caption = '  '#1059#1089#1083#1086#1074#1080#1077'  '
@@ -109,9 +108,9 @@ object Form1: TForm1
       end
       object Panel1: TPanel
         Left = 2
-        Top = 65
+        Top = 105
         Width = 981
-        Height = 46
+        Height = 68
         Align = alClient
         Caption = #1047#1076#1077#1089#1100' '#1073#1091#1076#1077#1090' '#1091#1089#1083#1086#1074#1080#1077
         TabOrder = 0
@@ -167,18 +166,50 @@ object Form1: TForm1
           TabOrder = 2
         end
       end
+      object GroupBox7: TGroupBox
+        Left = 2
+        Top = 65
+        Width = 981
+        Height = 40
+        Align = alTop
+        TabOrder = 2
+        object Label3: TLabel
+          Left = 8
+          Top = 16
+          Width = 119
+          Height = 16
+          Caption = #1058#1077#1082#1091#1097#1077#1077' '#1079#1072#1076#1072#1085#1080#1077':'
+        end
+        object Panel2: TPanel
+          Left = 136
+          Top = 16
+          Width = 185
+          Height = 20
+          Caption = '1'
+          TabOrder = 0
+        end
+        object saveAnswerBtn: TButton
+          Left = 832
+          Top = 16
+          Width = 137
+          Height = 20
+          Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100' '#1086#1090#1074#1077#1090
+          TabOrder = 1
+          OnClick = saveAnswerBtnClick
+        end
+      end
     end
     object GroupBox5: TGroupBox
       Left = 2
-      Top = 300
+      Top = 362
       Width = 985
-      Height = 434
+      Height = 372
       Align = alClient
       Caption = '  '#1056#1077#1079#1091#1083#1100#1090#1072#1090'  '
       TabOrder = 2
       object Splitter4: TSplitter
         Left = 2
-        Top = 353
+        Top = 291
         Width = 981
         Height = 3
         Cursor = crVSplit
@@ -186,7 +217,7 @@ object Form1: TForm1
       end
       object Panel3: TPanel
         Left = 2
-        Top = 356
+        Top = 294
         Width = 981
         Height = 76
         Align = alBottom
@@ -197,7 +228,7 @@ object Form1: TForm1
         Left = 2
         Top = 18
         Width = 981
-        Height = 335
+        Height = 273
         Align = alClient
         DataSource = DataSource1
         TabOrder = 1
@@ -243,8 +274,8 @@ object Form1: TForm1
   end
   object DataSource1: TDataSource
     DataSet = MyQuery1
-    Left = 82
-    Top = 18
+    Left = 1090
+    Top = 218
   end
   object MyEmbConnection1: TMyEmbConnection
     Options.Charset = 'cp1251'
@@ -253,16 +284,22 @@ object Form1: TForm1
       '--datadir=data'
       '--skip-innodb')
     Username = 'root'
-    Left = 10
-    Top = 18
+    Left = 1018
+    Top = 218
   end
   object MyQuery1: TMyQuery
     Connection = MyEmbConnection1
-    Left = 42
-    Top = 18
+    Left = 1050
+    Top = 218
   end
   object OpenDialog1: TOpenDialog
-    Left = 114
-    Top = 18
+    Left = 1122
+    Top = 218
+  end
+  object SaveDialog1: TSaveDialog
+    Filter = 'xml|*.xml'
+    InitialDir = '..\teachers\answers'
+    Left = 1160
+    Top = 216
   end
 end

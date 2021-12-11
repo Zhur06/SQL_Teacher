@@ -36,6 +36,11 @@ type
     dbCreateBtn: TButton;
     Label2: TLabel;
     dbName: TEdit;
+    GroupBox7: TGroupBox;
+    Label3: TLabel;
+    Panel2: TPanel;
+    saveAnswerBtn: TButton;
+    SaveDialog1: TSaveDialog;
     procedure FormCreate(Sender: TObject);
     procedure goBtnClick(Sender: TObject);
     procedure doScriptBtnClick(Sender: TObject);
@@ -46,6 +51,7 @@ type
       NewHeight: Integer; var Resize: Boolean);
     procedure ComboBox1Change(Sender: TObject);
     procedure dbCreateBtnClick(Sender: TObject);
+    procedure saveAnswerBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -67,6 +73,8 @@ begin
   Form1.doScriptBtn.Top := Form1.GroupBox1.Height - Form1.doScriptBtn.Height - 5;
 
   Form1.ComboBox1.Width := Form1.GroupBox6.Width - Form1.ComboBox1.Left - 5;
+
+  Form1.saveAnswerBtn.Left := Form1.GroupBox7.Width - Form1.saveAnswerBtn.Width - 5;
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
@@ -132,6 +140,12 @@ begin
   MyQuery1.SQL.LoadFromFile(OpenDialog1.FileName);
   MyQuery1.Open;
 end;
+end;
+
+procedure TForm1.saveAnswerBtnClick(Sender: TObject);
+begin
+if SaveDialog1.Execute then
+  MyQuery1.SaveToXML(SaveDialog1.FileName);
 end;
 
 end.
