@@ -69,7 +69,7 @@ object Form1: TForm1
         Align = alClient
         Lines.Strings = (
           'SELECT *'
-          'FROM pc;')
+          'FROM ;')
         TabOrder = 0
       end
       object goBtn: TButton
@@ -146,8 +146,6 @@ object Form1: TForm1
           ItemHeight = 16
           TabOrder = 0
           OnChange = ComboBox1Change
-          Items.Strings = (
-            'Computer')
         end
         object dbCreateBtn: TButton
           Left = 872
@@ -277,21 +275,6 @@ object Form1: TForm1
     Left = 1090
     Top = 218
   end
-  object MyEmbConnection1: TMyEmbConnection
-    Options.Charset = 'cp1251'
-    Params.Strings = (
-      '--basedir=.'
-      '--datadir=data'
-      '--skip-innodb')
-    Username = 'root'
-    Left = 1018
-    Top = 218
-  end
-  object MyQuery1: TMyQuery
-    Connection = MyEmbConnection1
-    Left = 1050
-    Top = 218
-  end
   object OpenDialog1: TOpenDialog
     Left = 1122
     Top = 218
@@ -300,6 +283,20 @@ object Form1: TForm1
     Filter = 'xml|*.xml'
     InitialDir = '..\teachers\answers'
     Left = 1160
+    Top = 216
+  end
+  object MyEmbConnection1: TMyEmbConnection
+    Options.Charset = 'cp1251'
+    Params.Strings = (
+      '--basedir=.'
+      '--datadir=data')
+    Username = 'root'
+    Left = 1016
+    Top = 216
+  end
+  object MyQuery1: TMyQuery
+    Connection = MyEmbConnection1
+    Left = 1048
     Top = 216
   end
 end

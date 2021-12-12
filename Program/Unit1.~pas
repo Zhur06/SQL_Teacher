@@ -21,8 +21,6 @@ type
     Panel3: TPanel;
     DataSource1: TDataSource;
     DBGrid1: TDBGrid;
-    MyEmbConnection1: TMyEmbConnection;
-    MyQuery1: TMyQuery;
     doScriptBtn: TButton;
     OpenDialog1: TOpenDialog;
     Splitter1: TSplitter;
@@ -41,6 +39,8 @@ type
     Panel2: TPanel;
     saveAnswerBtn: TButton;
     SaveDialog1: TSaveDialog;
+    MyEmbConnection1: TMyEmbConnection;
+    MyQuery1: TMyQuery;
     procedure FormCreate(Sender: TObject);
     procedure goBtnClick(Sender: TObject);
     procedure doScriptBtnClick(Sender: TObject);
@@ -65,6 +65,8 @@ implementation
 
 {$R *.dfm}
 
+Uses IniFiles;
+
 procedure btnPositioning();
 begin
   Form1.goBtn.Left := Form1.GroupBox3.Width - Form1.goBtn.Width - 5;
@@ -78,8 +80,13 @@ begin
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
+var Ini: Tinifile; i: integer;
 begin
   btnPositioning;
+
+  Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
+  For i := 1 to Ini.ReadInteger('ComboBox', 'MaxValue', 1) + 1 do
+  ComboBox1.AddItem(Ini.ReadString('ComboBox', IntToStr(i), ''), Self);
 end;
 
 procedure TForm1.goBtnClick(Sender: TObject);
@@ -131,8 +138,13 @@ begin
 end;
 
 procedure TForm1.dbCreateBtnClick(Sender: TObject);
+var Ini: Tinifile;
 begin
+  Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
+  Ini.WriteInteger('ComboBox', 'MaxValue', Ini.ReadInteger('ComboBox','MaxValue',0) + 1);
+  Ini.WriteString('ComboBox', IntToStr(Ini.ReadInteger('ComboBox','MaxValue',0)), dbName.Text);
   ComboBox1.AddItem(dbName.Text, Self);
+  Ini.Free; 
 
 if OpenDialog1.Execute then
 begin
