@@ -86,3 +86,59 @@ InnoDB: the problem may be that during an earlier attempt you managed
 InnoDB: to create the InnoDB data files, but log file creation failed.
 InnoDB: If that is the case, please refer to
 InnoDB: http://dev.mysql.com/doc/refman/5.6/en/error-creating-innodb.html
+InnoDB: No valid checkpoint found.
+InnoDB: If you are attempting downgrade from MySQL 5.7.9 or later,
+InnoDB: please refer to http://dev.mysql.com/doc/refman/5.6/en/upgrading-downgrading.html
+InnoDB: If this error appears when you are creating an InnoDB database,
+InnoDB: the problem may be that during an earlier attempt you managed
+InnoDB: to create the InnoDB data files, but log file creation failed.
+InnoDB: If that is the case, please refer to
+InnoDB: http://dev.mysql.com/doc/refman/5.6/en/error-creating-innodb.html
+InnoDB: No valid checkpoint found.
+InnoDB: If you are attempting downgrade from MySQL 5.7.9 or later,
+InnoDB: please refer to http://dev.mysql.com/doc/refman/5.6/en/upgrading-downgrading.html
+InnoDB: If this error appears when you are creating an InnoDB database,
+InnoDB: the problem may be that during an earlier attempt you managed
+InnoDB: to create the InnoDB data files, but log file creation failed.
+InnoDB: If that is the case, please refer to
+InnoDB: http://dev.mysql.com/doc/refman/5.6/en/error-creating-innodb.html
+InnoDB: No valid checkpoint found.
+InnoDB: If you are attempting downgrade from MySQL 5.7.9 or later,
+InnoDB: please refer to http://dev.mysql.com/doc/refman/5.6/en/upgrading-downgrading.html
+InnoDB: If this error appears when you are creating an InnoDB database,
+InnoDB: the problem may be that during an earlier attempt you managed
+InnoDB: to create the InnoDB data files, but log file creation failed.
+InnoDB: If that is the case, please refer to
+InnoDB: http://dev.mysql.com/doc/refman/5.6/en/error-creating-innodb.html
+InnoDB: No valid checkpoint found.
+InnoDB: If you are attempting downgrade from MySQL 5.7.9 or later,
+InnoDB: please refer to http://dev.mysql.com/doc/refman/5.6/en/upgrading-downgrading.html
+InnoDB: If this error appears when you are creating an InnoDB database,
+InnoDB: the problem may be that during an earlier attempt you managed
+InnoDB: to create the InnoDB data files, but log file creation failed.
+InnoDB: If that is the case, please refer to
+InnoDB: http://dev.mysql.com/doc/refman/5.6/en/error-creating-innodb.html
+InnoDB: No valid checkpoint found.
+InnoDB: If you are attempting downgrade from MySQL 5.7.9 or later,
+InnoDB: please refer to http://dev.mysql.com/doc/refman/5.6/en/upgrading-downgrading.html
+InnoDB: If this error appears when you are creating an InnoDB database,
+InnoDB: the problem may be that during an earlier attempt you managed
+InnoDB: to create the InnoDB data files, but log file creation failed.
+InnoDB: If that is the case, please refer to
+InnoDB: http://dev.mysql.com/doc/refman/5.6/en/error-creating-innodb.html
+InnoDB: No valid checkpoint found.
+InnoDB: If you are attempting downgrade from MySQL 5.7.9 or later,
+InnoDB: please refer to http://dev.mysql.com/doc/refman/5.6/en/upgrading-downgrading.html
+InnoDB: If this error appears when you are creating an InnoDB database,
+InnoDB: the problem may be that during an earlier attempt you managed
+InnoDB: to create the InnoDB data files, but log file creation failed.
+InnoDB: If that is the case, please refer to
+InnoDB: http://dev.mysql.com/doc/refman/5.6/en/error-creating-innodb.html
+InnoDB: No valid checkpoint found.
+InnoDB: If you are attempting downgrade from MySQL 5.7.9 or later,
+InnoDB: please refer to http://dev.mysql.com/doc/refman/5.6/en/upgrading-downgrading.html
+InnoDB: If this error appears when you are creating an InnoDB database,
+InnoDB: the problem may be that during an earlier attempt you managed
+InnoDB: to create the InnoDB data files, but log file creation failed.
+InnoDB: If that is the case, please refer to
+InnoDB: http://dev.mysql.com/doc/refman/5.6/en/error-creating-innodb.html

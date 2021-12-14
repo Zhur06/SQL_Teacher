@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 453
-  Top = 166
+  Left = 509
+  Top = 139
   Width = 1218
   Height = 775
   Caption = 'SQLTeacher'
@@ -11,21 +11,20 @@ object Form1: TForm1
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
-  OnCanResize = FormCanResize
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
-  object Splitter3: TSplitter
-    Left = 989
+  object Splitter1: TSplitter
+    Left = 943
     Top = 0
+    Width = 9
     Height = 736
     Align = alRight
-    OnMoved = Splitter3Moved
   end
   object GroupBox4: TGroupBox
     Left = 0
     Top = 0
-    Width = 989
+    Width = 943
     Height = 736
     Align = alClient
     Font.Charset = DEFAULT_CHARSET
@@ -35,58 +34,143 @@ object Form1: TForm1
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    object Splitter1: TSplitter
-      Left = 2
-      Top = 193
-      Width = 985
-      Height = 3
-      Cursor = crVSplit
-      Align = alTop
-      OnMoved = Splitter1Moved
-    end
-    object Splitter2: TSplitter
-      Left = 2
-      Top = 359
-      Width = 985
-      Height = 3
-      Cursor = crVSplit
-      Align = alTop
-      OnMoved = Splitter2Moved
-    end
-    object GroupBox3: TGroupBox
-      Left = 2
-      Top = 196
-      Width = 985
-      Height = 163
-      Align = alTop
-      Caption = '  SQL '#1082#1086#1076'  '
+  end
+  object Panel4: TPanel
+    Left = 952
+    Top = 0
+    Width = 250
+    Height = 736
+    Align = alRight
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
+    object PageControl1: TPageControl
+      Left = 1
+      Top = 57
+      Width = 248
+      Height = 678
+      ActivePage = TabSheet1
+      Align = alClient
       TabOrder = 0
-      object Memo1: TMemo
-        Left = 2
-        Top = 18
-        Width = 981
-        Height = 143
-        Align = alClient
-        Lines.Strings = (
-          'SELECT *'
-          'FROM pc;')
+      object TabSheet1: TTabSheet
+        Caption = #1047#1072#1076#1072#1085#1080#1103
+        DesignSize = (
+          240
+          647)
+        object Button1: TButton
+          Left = 6
+          Top = 8
+          Width = 227
+          Height = 25
+          Anchors = [akLeft, akTop, akRight]
+          Caption = '1'
+          TabOrder = 0
+        end
+      end
+      object TabSheet2: TTabSheet
+        Caption = #1044#1083#1103' '#1091#1095#1080#1090#1077#1083#1103
+        ImageIndex = 1
+        DesignSize = (
+          240
+          647)
+        object dbCreateBtn: TButton
+          Left = 7
+          Top = 4
+          Width = 226
+          Height = 37
+          Anchors = [akLeft, akTop, akRight]
+          Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1041#1044
+          TabOrder = 0
+          OnClick = dbCreateBtnClick
+        end
+        object doScriptBtn: TButton
+          Left = 6
+          Top = 58
+          Width = 227
+          Height = 37
+          Anchors = [akLeft, akTop, akRight]
+          Caption = #1042#1099#1087#1086#1083#1085#1080#1090#1100' '#1089#1082#1088#1080#1087#1090' '#1080#1079' '#1092#1072#1081#1083#1072
+          TabOrder = 1
+          OnClick = doScriptBtnClick
+        end
+        object saveAnswerBtn: TButton
+          Left = 7
+          Top = 112
+          Width = 226
+          Height = 37
+          Anchors = [akLeft, akTop, akRight]
+          Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100' '#1086#1090#1074#1077#1090
+          TabOrder = 2
+          OnClick = saveAnswerBtnClick
+        end
+      end
+    end
+    object GroupBox1: TGroupBox
+      Left = 1
+      Top = 1
+      Width = 248
+      Height = 56
+      Align = alTop
+      Caption = '  '#1048#1089#1087#1086#1083#1100#1079#1091#1077#1084#1072#1103' '#1041#1044'  '
+      TabOrder = 1
+      DesignSize = (
+        248
+        56)
+      object ComboBox1: TComboBox
+        Left = 8
+        Top = 24
+        Width = 233
+        Height = 24
+        Style = csDropDownList
+        Anchors = [akLeft, akTop, akRight]
+        ItemHeight = 16
+        ItemIndex = 0
         TabOrder = 0
+        Text = '-- '#1053#1077' '#1074#1099#1073#1088#1072#1085#1072' --'
+        OnChange = ComboBox1Change
+        Items.Strings = (
+          '-- '#1053#1077' '#1074#1099#1073#1088#1072#1085#1072' --')
       end
-      object goBtn: TButton
-        Left = 1093
-        Top = 67
-        Width = 83
-        Height = 25
-        Caption = #1042#1099#1087#1086#1083#1085#1080#1090#1100
-        TabOrder = 1
-        OnClick = goBtnClick
-      end
+    end
+  end
+  object Panel5: TPanel
+    Left = 0
+    Top = 0
+    Width = 943
+    Height = 736
+    Align = alClient
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+    object Splitter2: TSplitter
+      Left = 1
+      Top = 129
+      Width = 941
+      Height = 9
+      Cursor = crVSplit
+      Align = alTop
+    end
+    object Splitter3: TSplitter
+      Left = 1
+      Top = 301
+      Width = 941
+      Height = 9
+      Cursor = crVSplit
+      Align = alTop
     end
     object GroupBox2: TGroupBox
-      Left = 2
-      Top = 18
-      Width = 985
-      Height = 175
+      Left = 1
+      Top = 1
+      Width = 941
+      Height = 128
       Align = alTop
       BiDiMode = bdLeftToRight
       Caption = '  '#1059#1089#1083#1086#1074#1080#1077'  '
@@ -97,126 +181,92 @@ object Form1: TForm1
       Font.Style = []
       ParentBiDiMode = False
       ParentFont = False
-      TabOrder = 1
-      object Splitter5: TSplitter
-        Left = 2
-        Top = 62
-        Width = 981
-        Height = 3
-        Cursor = crVSplit
-        Align = alTop
-      end
+      TabOrder = 0
       object Panel1: TPanel
         Left = 2
-        Top = 105
-        Width = 981
-        Height = 68
+        Top = 57
+        Width = 937
+        Height = 69
         Align = alClient
         Caption = #1047#1076#1077#1089#1100' '#1073#1091#1076#1077#1090' '#1091#1089#1083#1086#1074#1080#1077
         TabOrder = 0
       end
-      object GroupBox6: TGroupBox
+      object Panel7: TPanel
         Left = 2
         Top = 18
-        Width = 981
-        Height = 44
+        Width = 937
+        Height = 39
         Align = alTop
         TabOrder = 1
-        object Label1: TLabel
-          Left = 2
-          Top = 18
-          Width = 195
-          Height = 24
-          Align = alLeft
-          Caption = '  '#1042#1099#1073#1077#1088#1080#1090#1077' '#1080#1089#1087#1086#1083#1100#1079#1091#1077#1084#1091#1102' '#1041#1044':'
-        end
-        object Label2: TLabel
-          Left = 8
-          Top = 48
-          Width = 427
-          Height = 16
-          Caption = #1063#1090#1086' '#1073#1099' '#1076#1086#1073#1072#1074#1080#1090#1100' '#1041#1044' '#1074#1074#1077#1076#1080#1090#1077' '#1080#1084#1103' '#1080' '#1086#1090#1082#1088#1086#1081#1090#1077' '#1089#1082#1088#1080#1087#1090' '#1089#1086#1079#1076#1072#1085#1080#1103' '#1041#1044':'
-        end
-        object ComboBox1: TComboBox
-          Left = 208
-          Top = 16
-          Width = 769
-          Height = 24
-          Style = csDropDownList
-          ItemHeight = 16
-          TabOrder = 0
-          OnChange = ComboBox1Change
-        end
-        object dbCreateBtn: TButton
-          Left = 872
-          Top = 44
-          Width = 105
-          Height = 25
-          Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1041#1044
-          TabOrder = 1
-          OnClick = dbCreateBtnClick
-        end
-        object dbName: TEdit
-          Left = 440
-          Top = 44
-          Width = 417
-          Height = 24
-          TabOrder = 2
-        end
-      end
-      object GroupBox7: TGroupBox
-        Left = 2
-        Top = 65
-        Width = 981
-        Height = 40
-        Align = alTop
-        TabOrder = 2
         object Label3: TLabel
           Left = 8
-          Top = 16
+          Top = 11
           Width = 119
           Height = 16
           Caption = #1058#1077#1082#1091#1097#1077#1077' '#1079#1072#1076#1072#1085#1080#1077':'
         end
-        object Panel2: TPanel
+        object Label2: TLabel
           Left = 136
-          Top = 16
-          Width = 185
+          Top = 9
+          Width = 9
           Height = 20
           Caption = '1'
-          TabOrder = 0
-        end
-        object saveAnswerBtn: TButton
-          Left = 832
-          Top = 16
-          Width = 137
-          Height = 20
-          Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100' '#1086#1090#1074#1077#1090
-          TabOrder = 1
-          OnClick = saveAnswerBtnClick
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -16
+          Font.Name = 'MS Sans Serif'
+          Font.Style = []
+          ParentFont = False
         end
       end
     end
+    object GroupBox3: TGroupBox
+      Left = 1
+      Top = 138
+      Width = 941
+      Height = 163
+      Align = alTop
+      Caption = '  SQL '#1082#1086#1076'  '
+      TabOrder = 1
+      DesignSize = (
+        941
+        163)
+      object Memo1: TMemo
+        Left = 2
+        Top = 18
+        Width = 937
+        Height = 143
+        Align = alClient
+        Enabled = False
+        Lines.Strings = (
+          'SELECT *'
+          'FROM ')
+        TabOrder = 0
+      end
+      object goBtn: TButton
+        Left = 796
+        Top = 131
+        Width = 137
+        Height = 25
+        Anchors = [akRight, akBottom]
+        Caption = #1042#1099#1087#1086#1083#1085#1080#1090#1100
+        Enabled = False
+        TabOrder = 1
+        OnClick = goBtnClick
+      end
+    end
     object GroupBox5: TGroupBox
-      Left = 2
-      Top = 362
-      Width = 985
-      Height = 372
+      Left = 1
+      Top = 310
+      Width = 941
+      Height = 425
       Align = alClient
       Caption = '  '#1056#1077#1079#1091#1083#1100#1090#1072#1090'  '
       TabOrder = 2
-      object Splitter4: TSplitter
-        Left = 2
-        Top = 291
-        Width = 981
-        Height = 3
-        Cursor = crVSplit
-        Align = alBottom
-      end
       object Panel3: TPanel
         Left = 2
-        Top = 294
-        Width = 981
+        Top = 347
+        Width = 937
         Height = 76
         Align = alBottom
         Caption = #1047#1076#1077#1089#1100' '#1073#1091#1076#1077#1090' '#1088#1077#1079#1091#1083#1100#1090#1072#1090' '#1087#1088#1086#1074#1077#1088#1082#1080' ('#1042#1077#1088#1085#1086'/'#1053#1077#1042#1077#1088#1085#1086')'
@@ -225,8 +275,8 @@ object Form1: TForm1
       object DBGrid1: TDBGrid
         Left = 2
         Top = 18
-        Width = 981
-        Height = 273
+        Width = 937
+        Height = 329
         Align = alClient
         DataSource = DataSource1
         TabOrder = 1
@@ -238,65 +288,45 @@ object Form1: TForm1
       end
     end
   end
-  object GroupBox1: TGroupBox
-    Left = 992
-    Top = 0
-    Width = 210
-    Height = 736
-    Align = alRight
-    Caption = '  '#1047#1072#1076#1072#1085#1080#1103'  '
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'MS Sans Serif'
-    Font.Style = []
-    ParentFont = False
-    TabOrder = 1
-    object Button1: TButton
-      Left = 8
-      Top = 24
-      Width = 193
-      Height = 25
-      Caption = '1'
-      TabOrder = 0
-    end
-    object doScriptBtn: TButton
-      Left = 8
-      Top = 704
-      Width = 193
-      Height = 25
-      Caption = #1042#1099#1087#1086#1083#1085#1080#1090#1100' '#1089#1082#1088#1080#1087#1090' '#1080#1079' '#1092#1072#1081#1083#1072
-      TabOrder = 1
-      OnClick = doScriptBtnClick
-    end
-  end
   object DataSource1: TDataSource
     DataSet = MyQuery1
-    Left = 1090
-    Top = 218
+    Left = 226
+    Top = 522
   end
   object OpenDialog1: TOpenDialog
-    Left = 1122
-    Top = 218
+    Left = 258
+    Top = 522
   end
   object SaveDialog1: TSaveDialog
     Filter = 'xml|*.xml'
     InitialDir = '..\teachers\answers'
-    Left = 1160
-    Top = 216
+    Left = 296
+    Top = 520
   end
   object MyEmbConnection1: TMyEmbConnection
+    Options.AllowImplicitConnect = False
     Options.Charset = 'cp1251'
     Params.Strings = (
       '--basedir=.'
       '--datadir=data')
     Username = 'root'
-    Left = 1016
-    Top = 216
+    LoginPrompt = False
+    Left = 152
+    Top = 520
   end
   object MyQuery1: TMyQuery
     Connection = MyEmbConnection1
-    Left = 1048
-    Top = 216
+    Left = 184
+    Top = 520
+  end
+  object MyScript1: TMyScript
+    Connection = MyEmbConnection1
+    Left = 152
+    Top = 560
+  end
+  object MyCommand1: TMyCommand
+    Connection = MyEmbConnection1
+    Left = 184
+    Top = 560
   end
 end
