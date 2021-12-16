@@ -5,7 +5,8 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, StdCtrls, ExtCtrls, DB, DBTables, Grids, DBGrids, MemDS,
-  DBAccess, MyAccess, MyEmbConnection, DAScript, MyScript, ComCtrls;
+  DBAccess, MyAccess, MyEmbConnection, DAScript, MyScript, ComCtrls,
+  ActnList;
 
 type
   TForm1 = class(TForm)
@@ -40,18 +41,23 @@ type
     Splitter1: TSplitter;
     Splitter2: TSplitter;
     Splitter3: TSplitter;
-    Timer1: TTimer;
     dbDeleteBtn: TButton;
     ListBox1: TListBox;
+    ActionList1: TActionList;
+    doScript: TAction;
+    showTeacher: TAction;
+    Panel2: TPanel;
+    Label1: TLabel;
+    Label4: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure goBtnClick(Sender: TObject);
     procedure doScriptBtnClick(Sender: TObject);
     procedure ComboBox1Change(Sender: TObject);
     procedure dbCreateBtnClick(Sender: TObject);
     procedure saveAnswerBtnClick(Sender: TObject);
-    procedure Timer1Timer(Sender: TObject);
     procedure dbDeleteBtnClick(Sender: TObject);
     procedure ListBox1Click(Sender: TObject);
+    procedure showTeacherExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -87,6 +93,7 @@ begin
   SQL.Text := Memo1.Text;
   Open;
 end;
+  Label4.Caption := IntToStr(MyQuery1.RecordCount);
 end;
 
 procedure TForm1.doScriptBtnClick(Sender: TObject);
@@ -122,6 +129,7 @@ begin
   doScriptBtn.Enabled := false;
   dbDeleteBtn.Enabled := false;
   saveAnswerBtn.Enabled := false;
+  doScript.Enabled := false;
 
   If not ((ComboBox1.Text[1] = '-') and (ComboBox1.Text[2] = '-')) then
   begin
@@ -133,6 +141,7 @@ begin
       doScriptBtn.Enabled := true;
       dbDeleteBtn.Enabled := true;
       saveAnswerBtn.Enabled := true;
+      doScript.Enabled := true;
     except
       MyEmbConnection1.Connected := false;
       ComboBox1.DeleteSelected;
@@ -152,12 +161,6 @@ begin
   SaveDialog1.InitialDir := ExtractFilePath(ParamStr(0));
 if SaveDialog1.Execute then
   MyQuery1.SaveToXML(SaveDialog1.FileName);
-end;
-
-procedure TForm1.Timer1Timer(Sender: TObject);
-begin
-  If GetKeyState(112) = 1 then
-    TabSheet2.TabVisible := not TabSheet2.TabVisible;
 end;
 
 procedure TForm1.dbDeleteBtnClick(Sender: TObject);
@@ -181,6 +184,11 @@ end;
 procedure TForm1.ListBox1Click(Sender: TObject);
 begin
   Label2.Caption := ListBox1.Items[ListBox1.ItemIndex];
+end;
+
+procedure TForm1.showTeacherExecute(Sender: TObject);
+begin
+  TabSheet2.TabVisible := not TabSheet2.TabVisible;
 end;
 
 end.

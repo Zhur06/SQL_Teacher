@@ -263,6 +263,9 @@ object Form1: TForm1
       Align = alClient
       Caption = '  '#1056#1077#1079#1091#1083#1100#1090#1072#1090'  '
       TabOrder = 2
+      DesignSize = (
+        941
+        425)
       object Panel3: TPanel
         Left = 2
         Top = 347
@@ -286,6 +289,27 @@ object Form1: TForm1
         TitleFont.Height = -13
         TitleFont.Name = 'MS Sans Serif'
         TitleFont.Style = []
+      end
+      object Panel2: TPanel
+        Left = 792
+        Top = 304
+        Width = 137
+        Height = 33
+        Anchors = [akRight, akBottom]
+        TabOrder = 2
+        object Label1: TLabel
+          Left = 8
+          Top = 8
+          Width = 84
+          Height = 16
+          Caption = #1042#1089#1077#1075#1086' '#1089#1090#1088#1086#1082': '
+        end
+        object Label4: TLabel
+          Left = 96
+          Top = 8
+          Width = 3
+          Height = 16
+        end
       end
     end
   end
@@ -331,9 +355,19 @@ object Form1: TForm1
     Left = 184
     Top = 560
   end
-  object Timer1: TTimer
-    OnTimer = Timer1Timer
-    Left = 153
+  object ActionList1: TActionList
+    Left = 185
     Top = 486
+    object doScript: TAction
+      Caption = 'doScript'
+      Enabled = False
+      ShortCut = 16397
+      OnExecute = goBtnClick
+    end
+    object showTeacher: TAction
+      Caption = 'showTeacher'
+      ShortCut = 112
+      OnExecute = showTeacherExecute
+    end
   end
 end
