@@ -9,11 +9,9 @@ uses
 
 type
   TForm1 = class(TForm)
-    Button1: TButton;
     GroupBox2: TGroupBox;
     Panel1: TPanel;
     GroupBox3: TGroupBox;
-    GroupBox4: TGroupBox;
     Memo1: TMemo;
     goBtn: TButton;
     GroupBox5: TGroupBox;
@@ -42,12 +40,18 @@ type
     Splitter1: TSplitter;
     Splitter2: TSplitter;
     Splitter3: TSplitter;
+    Timer1: TTimer;
+    dbDeleteBtn: TButton;
+    ListBox1: TListBox;
     procedure FormCreate(Sender: TObject);
     procedure goBtnClick(Sender: TObject);
     procedure doScriptBtnClick(Sender: TObject);
     procedure ComboBox1Change(Sender: TObject);
     procedure dbCreateBtnClick(Sender: TObject);
     procedure saveAnswerBtnClick(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure dbDeleteBtnClick(Sender: TObject);
+    procedure ListBox1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -69,6 +73,10 @@ begin
   Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
   For i := 1 to Ini.ReadInteger('ComboBox', 'MaxValue', 1) do
     ComboBox1.AddItem(Ini.ReadString('ComboBox', IntToStr(i), ''), Self);
+  Ini.Free;
+
+  Form1.Left:= (Screen.WorkAreaWidth - Form1.Width) div 2;
+  Form1.Top:= (Screen.WorkAreaHeight - Form1.Height) div 2;
 end;
 
 procedure TForm1.goBtnClick(Sender: TObject);
@@ -82,11 +90,27 @@ end;
 end;
 
 procedure TForm1.doScriptBtnClick(Sender: TObject);
+var F: file of char; c: char;
 begin
+  OpenDialog1.InitialDir := ExtractFilePath(ParamStr(0));
 if OpenDialog1.Execute then
 begin
-  MyScript1.SQL.LoadFromFile(OpenDialog1.FileName);
-  MyScript1.Execute;
+  MyQuery1.Close;
+  MyQuery1.SQL.LoadFromFile(OpenDialog1.FileName);
+  MyQuery1.Open;
+
+  AssignFile(F, OpenDialog1.FileName);
+  Reset(F);
+
+  Memo1.Text := '';
+
+  While not EOF(F) do
+  begin
+    Read(F, c);
+    Memo1.Text := Memo1.Text + c;
+  end;
+
+  CloseFile(F);
 end;
 end;
 
@@ -95,6 +119,9 @@ begin
   MyEmbConnection1.Connected := false;
   goBtn.Enabled := false;
   Memo1.Enabled := false;
+  doScriptBtn.Enabled := false;
+  dbDeleteBtn.Enabled := false;
+  saveAnswerBtn.Enabled := false;
 
   If not ((ComboBox1.Text[1] = '-') and (ComboBox1.Text[2] = '-')) then
   begin
@@ -103,6 +130,9 @@ begin
       MyEmbConnection1.Connected := true;
       goBtn.Enabled := true;
       Memo1.Enabled := true;
+      doScriptBtn.Enabled := true;
+      dbDeleteBtn.Enabled := true;
+      saveAnswerBtn.Enabled := true;
     except
       MyEmbConnection1.Connected := false;
       ComboBox1.DeleteSelected;
@@ -119,8 +149,38 @@ end;
 
 procedure TForm1.saveAnswerBtnClick(Sender: TObject);
 begin
+  SaveDialog1.InitialDir := ExtractFilePath(ParamStr(0));
 if SaveDialog1.Execute then
   MyQuery1.SaveToXML(SaveDialog1.FileName);
+end;
+
+procedure TForm1.Timer1Timer(Sender: TObject);
+begin
+  If GetKeyState(112) = 1 then
+    TabSheet2.TabVisible := not TabSheet2.TabVisible;
+end;
+
+procedure TForm1.dbDeleteBtnClick(Sender: TObject);
+var Ini: Tinifile; i, elIndx: integer;
+begin
+  if MyEmbConnection1.Connected = true then
+  begin
+    MyScript1.SQL.Text := 'DROP DATABASE ' + ComboBox1.Items[ComboBox1.ItemIndex];
+    MyScript1.Execute;
+
+    elIndx := ComboBox1.ItemIndex;
+    ComboBox1.DeleteSelected;
+    ComboBox1.ItemIndex := 0;
+
+    Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
+    For i := elIndx to Ini.ReadInteger('ComboBox', 'MaxValue', 1) do
+      Ini.WriteString('ComboBox', IntToStr(i), Ini.ReadString('ComboBox', intToStr(i + 1), ''));
+  end;
+end;
+
+procedure TForm1.ListBox1Click(Sender: TObject);
+begin
+  Label2.Caption := ListBox1.Items[ListBox1.ItemIndex];
 end;
 
 end.

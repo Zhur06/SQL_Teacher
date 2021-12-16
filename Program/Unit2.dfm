@@ -1,8 +1,8 @@
 object Form2: TForm2
   Left = 658
   Top = 355
-  Width = 612
-  Height = 388
+  Width = 271
+  Height = 128
   Caption = #1057#1086#1079#1076#1072#1085#1080#1077' '#1041#1044
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -11,6 +11,7 @@ object Form2: TForm2
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnActivate = FormActivate
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel

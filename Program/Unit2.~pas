@@ -16,6 +16,8 @@ type
     Button2: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -33,6 +35,8 @@ Uses Unit1, IniFiles;
 
 procedure TForm2.Button1Click(Sender: TObject);
 begin
+  Form1.OpenDialog1.InitialDir := ExtractFilePath(ParamStr(0));
+
   if Form1.OpenDialog1.Execute then
   begin
     dbWay.Caption := Form1.OpenDialog1.FileName;
@@ -42,11 +46,24 @@ begin
 end;
 
 procedure TForm2.Button2Click(Sender: TObject);
-var Ini: Tinifile;
+var Ini: Tinifile; i: integer;
 begin
   Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
-  Ini.WriteInteger('ComboBox', 'MaxValue', Ini.ReadInteger('ComboBox','MaxValue',0) + 1);
-  Ini.WriteString('ComboBox', IntToStr(Ini.ReadInteger('ComboBox','MaxValue',0)), dbName.Text);
+  If not (Ini.ReadString('ComboBox', IntToStr(Ini.ReadInteger('ComboBox','MaxValue',0)), '') = '') then
+  begin
+    Ini.WriteInteger('ComboBox', 'MaxValue', Ini.ReadInteger('ComboBox','MaxValue',0) + 1);
+    Ini.WriteString('ComboBox', IntToStr(Ini.ReadInteger('ComboBox','MaxValue',0)), dbName.Text);
+  end
+  else
+    For i := Ini.ReadInteger('ComboBox','MaxValue', 1) downto 1 do
+    begin
+      if Ini.ReadString('ComboBox', IntToStr(i - 1), '') <> '' then
+      begin
+        Ini.WriteInteger('ComboBox', 'MaxValue', i);
+        Ini.WriteString('ComboBox', IntToStr(i), dbName.Text);
+        BREAK;
+      end;
+    end;
 
   Form1.ComboBox1.AddItem(dbName.Text, Self);
   Ini.Free;
@@ -54,6 +71,12 @@ begin
   Form1.MyScript1.SQL.LoadFromFile(dbWay.Caption);
   Form1.MyScript1.Execute();
 
+end;
+
+procedure TForm2.FormActivate(Sender: TObject);
+begin
+  Form2.Left:= (Screen.WorkAreaWidth - Form2.Width) div 2;
+  Form2.Top:= (Screen.WorkAreaHeight - Form2.Height) div 2;
 end;
 
 end.
