@@ -52,9 +52,6 @@ object Form1: TForm1
           Height = 647
           Align = alClient
           ItemHeight = 16
-          Items.Strings = (
-            '1'
-            '2')
           TabOrder = 0
           OnClick = ListBox1Click
         end

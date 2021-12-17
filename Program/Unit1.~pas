@@ -9,6 +9,8 @@ uses
   ActnList;
 
 type
+  Arr = array of string;
+
   TForm1 = class(TForm)
     GroupBox2: TGroupBox;
     Panel1: TPanel;
@@ -58,6 +60,7 @@ type
     procedure dbDeleteBtnClick(Sender: TObject);
     procedure ListBox1Click(Sender: TObject);
     procedure showTeacherExecute(Sender: TObject);
+    function Find(cDir, FileName: string): Arr;
   private
     { Private declarations }
   public
@@ -73,6 +76,18 @@ implementation
 
 Uses IniFiles, Unit2;
 
+//----------------- Заполнение списка заданий ----------------------------------
+
+procedure fillTaskList();
+var ii: integer; A: Arr;
+begin
+  A := Find(ExtractFilePath(ParamStr(0)) + '\teachers', '*.txt');
+  for ii := 0 to length(A) - 1 do
+    ListBox1.Items.Add(A[ii]);
+end;
+
+//----------------- Действия по созданию формы ---------------------------------
+
 procedure TForm1.FormCreate(Sender: TObject);
 var Ini: Tinifile; i: integer;
 begin
@@ -83,7 +98,11 @@ begin
 
   Form1.Left:= (Screen.WorkAreaWidth - Form1.Width) div 2;
   Form1.Top:= (Screen.WorkAreaHeight - Form1.Height) div 2;
+
+  fillTaskList;
 end;
+
+//----------------- Выполнение команды -----------------------------------------
 
 procedure TForm1.goBtnClick(Sender: TObject);
 begin
@@ -95,6 +114,8 @@ begin
 end;
   Label4.Caption := IntToStr(MyQuery1.RecordCount);
 end;
+
+//----------------- Выполнение скрипта из файла --------------------------------
 
 procedure TForm1.doScriptBtnClick(Sender: TObject);
 var F: file of char; c: char;
@@ -120,6 +141,8 @@ begin
   CloseFile(F);
 end;
 end;
+
+//----------------- Изменение БД -----------------------------------------------
 
 procedure TForm1.ComboBox1Change(Sender: TObject);
 begin
@@ -150,11 +173,15 @@ begin
   end;
 end;
 
+//----------------- Создание БД ------------------------------------------------
+
 procedure TForm1.dbCreateBtnClick(Sender: TObject);
 begin
   Form2 := TForm2.Create(Self);
   Form2.Show;
 end;
+
+//----------------- Сохранение ответа ------------------------------------------
 
 procedure TForm1.saveAnswerBtnClick(Sender: TObject);
 begin
@@ -162,6 +189,8 @@ begin
 if SaveDialog1.Execute then
   MyQuery1.SaveToXML(SaveDialog1.FileName);
 end;
+
+//----------------- Удаление БД ------------------------------------------------
 
 procedure TForm1.dbDeleteBtnClick(Sender: TObject);
 var Ini: Tinifile; i, elIndx: integer;
@@ -181,14 +210,52 @@ begin
   end;
 end;
 
+//----------------- Выбор задания ----------------------------------------------
+
 procedure TForm1.ListBox1Click(Sender: TObject);
 begin
   Label2.Caption := ListBox1.Items[ListBox1.ItemIndex];
 end;
 
+//----------------- Разблокирование вкладки для учителя ------------------------
+
 procedure TForm1.showTeacherExecute(Sender: TObject);
 begin
   TabSheet2.TabVisible := not TabSheet2.TabVisible;
+end;
+
+//----------------- Вывод названий всех файлов заданного расширения в указ. директории
+
+function TForm1.Find(cDir, FileName: string): Arr;
+var
+  SearchRec: TSearchRec; // информация о каталоге
+  n: LongInt;
+  iii: integer;
+  A: arr;
+begin
+ 
+  n := 0;
+  ChDir(cDir); // войти в каталог
+try
+  if FindFirst(FileName, faArchive, SearchRec) = 0 then
+  repeat
+    if (SearchRec.Attr and faAnyFile) = SearchRec.Attr then
+    begin
+      SetLength(a, Length(a) + 1);
+      a[n] := (SearchRec.Name);
+      n := n + 1;
+    end;
+  until FindNext(SearchRec) <> 0;
+except end;
+
+  SetLength(result, Length(A));
+
+  For n := 0 to Length(A) - 1 do
+    For iii := 1 to Length(A[n]) do
+      if not (A[n][iii] = '.') then
+        result[n] := result[n] + A[n][iii]
+      else
+        BREAK;
 end;
 
 end.
