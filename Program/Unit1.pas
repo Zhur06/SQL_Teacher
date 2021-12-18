@@ -13,12 +13,11 @@ type
 
   TForm1 = class(TForm)
     GroupBox2: TGroupBox;
-    Panel1: TPanel;
     GroupBox3: TGroupBox;
     Memo1: TMemo;
     goBtn: TButton;
     GroupBox5: TGroupBox;
-    Panel3: TPanel;
+    matchPanel: TPanel;
     DataSource1: TDataSource;
     DBGrid1: TDBGrid;
     doScriptBtn: TButton;
@@ -51,6 +50,9 @@ type
     Panel2: TPanel;
     Label1: TLabel;
     Label4: TLabel;
+    taskLabel: TLabel;
+    Splitter4: TSplitter;
+    checkBtn: TButton;
     procedure FormCreate(Sender: TObject);
     procedure goBtnClick(Sender: TObject);
     procedure doScriptBtnClick(Sender: TObject);
@@ -61,6 +63,8 @@ type
     procedure ListBox1Click(Sender: TObject);
     procedure showTeacherExecute(Sender: TObject);
     function Find(cDir, FileName: string): Arr;
+    procedure checkBtnClick(Sender: TObject);
+    procedure fillTaskList;
   private
     { Private declarations }
   public
@@ -78,12 +82,12 @@ Uses IniFiles, Unit2;
 
 //----------------- Заполнение списка заданий ----------------------------------
 
-procedure fillTaskList();
+procedure TForm1.fillTaskList();
 var ii: integer; A: Arr;
 begin
-  A := Form1.Find(ExtractFilePath(ParamStr(0)) + '\teachers', '*.txt');
+  A := Find(ExtractFilePath(ParamStr(0)) + '\teachers', '*.txt');
   for ii := 0 to length(A) - 1 do
-    Form1.ListBox1.Items.Add(A[ii]);
+    ListBox1.Items.Add(A[ii]);
 end;
 
 //----------------- Действия по созданию формы ---------------------------------
@@ -91,6 +95,7 @@ end;
 procedure TForm1.FormCreate(Sender: TObject);
 var Ini: Tinifile; i: integer;
 begin
+
   Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
   For i := 1 to Ini.ReadInteger('ComboBox', 'MaxValue', 1) do
     ComboBox1.AddItem(Ini.ReadString('ComboBox', IntToStr(i), ''), Self);
@@ -153,6 +158,7 @@ begin
   dbDeleteBtn.Enabled := false;
   saveAnswerBtn.Enabled := false;
   doScript.Enabled := false;
+  checkBtn.Enabled := false;
 
   If not ((ComboBox1.Text[1] = '-') and (ComboBox1.Text[2] = '-')) then
   begin
@@ -165,6 +171,7 @@ begin
       dbDeleteBtn.Enabled := true;
       saveAnswerBtn.Enabled := true;
       doScript.Enabled := true;
+      checkBtn.Enabled := true;
     except
       MyEmbConnection1.Connected := false;
       ComboBox1.DeleteSelected;
@@ -213,8 +220,25 @@ end;
 //----------------- Выбор задания ----------------------------------------------
 
 procedure TForm1.ListBox1Click(Sender: TObject);
+var F: file of char; c: char;
 begin
   Label2.Caption := ListBox1.Items[ListBox1.ItemIndex];
+
+  AssignFile(F, ExtractFilePath(ParamStr(0)) + '\teachers\' + ListBox1.Items[ListBox1.ItemIndex] + '.txt');
+
+  Reset(F);
+
+  taskLabel.Caption := '';
+
+  While not EOF(F) do
+  begin
+    Read(F, c);
+    taskLabel.Caption := taskLabel.Caption + c;
+  end;
+
+  CloseFile(F);
+
+  matchPanel.Caption := 'Здесь будет результат проверки (Верно/НеВерно)';
 end;
 
 //----------------- Разблокирование вкладки для учителя ------------------------
@@ -256,6 +280,62 @@ except end;
         result[n] := result[n] + A[n][iii]
       else
         BREAK;
+
+  ChDir(ExtractFilePath(ParamStr(0)));
+end;
+
+//----------------- Проверка задания -------------------------------------------
+
+procedure TForm1.checkBtnClick(Sender: TObject);
+var F: file of char; c: char; answ, resul: string;
+begin
+  MyQuery1.SaveToXML('YourResult.xml');
+
+  try
+  AssignFile(F, ExtractFilePath(ParamStr(0)) + '\teachers\' + ListBox1.Items[ListBox1.ItemIndex] + '.xml');
+
+  Reset(F);
+
+  answ := '';
+
+  While not EOF(F) do
+  begin
+    Read(F, c);
+    answ := answ + c;
+  end;
+
+  CloseFile(F);
+
+
+
+  AssignFile(F, 'YourResult.xml');
+
+  Reset(F);
+
+  resul := '';
+
+  While not EOF(F) do
+  begin
+    Read(F, c);
+    resul := resul + c;
+  end;
+
+  CloseFile(F);
+
+  if answ = resul then
+  begin
+    matchPanel.Caption := 'Задача решена верно';
+  end
+  else
+  begin
+    matchPanel.Caption := 'Задача решена неверно';
+  end;
+
+  DeleteFile('YourResult.xml');
+
+  except
+    ShowMessage('Ответа на это задание еще нет');
+  end;
 end;
 
 end.

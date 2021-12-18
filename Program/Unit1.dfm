@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 477
-  Top = 226
+  Left = 471
+  Top = 232
   Width = 1218
   Height = 775
   Align = alCustom
@@ -100,6 +100,7 @@ object Form1: TForm1
           Top = 64
           Width = 225
           Height = 33
+          Anchors = [akLeft, akTop, akRight]
           Caption = #1059#1076#1072#1083#1080#1090#1100' '#1041#1044
           Enabled = False
           TabOrder = 3
@@ -180,14 +181,21 @@ object Form1: TForm1
       ParentBiDiMode = False
       ParentFont = False
       TabOrder = 0
-      object Panel1: TPanel
+      object taskLabel: TLabel
+        Left = 2
+        Top = 66
+        Width = 937
+        Height = 60
+        Align = alClient
+        Caption = #1047#1076#1077#1089#1100' '#1073#1091#1076#1077#1090' '#1079#1072#1076#1072#1085#1080#1077
+      end
+      object Splitter4: TSplitter
         Left = 2
         Top = 57
         Width = 937
-        Height = 69
-        Align = alClient
-        Caption = #1047#1076#1077#1089#1100' '#1073#1091#1076#1077#1090' '#1091#1089#1083#1086#1074#1080#1077
-        TabOrder = 0
+        Height = 9
+        Cursor = crVSplit
+        Align = alTop
       end
       object Panel7: TPanel
         Left = 2
@@ -195,7 +203,7 @@ object Form1: TForm1
         Width = 937
         Height = 39
         Align = alTop
-        TabOrder = 1
+        TabOrder = 0
         object Label3: TLabel
           Left = 8
           Top = 11
@@ -263,7 +271,7 @@ object Form1: TForm1
       DesignSize = (
         941
         425)
-      object Panel3: TPanel
+      object matchPanel: TPanel
         Left = 2
         Top = 347
         Width = 937
@@ -271,6 +279,16 @@ object Form1: TForm1
         Align = alBottom
         Caption = #1047#1076#1077#1089#1100' '#1073#1091#1076#1077#1090' '#1088#1077#1079#1091#1083#1100#1090#1072#1090' '#1087#1088#1086#1074#1077#1088#1082#1080' ('#1042#1077#1088#1085#1086'/'#1053#1077#1042#1077#1088#1085#1086')'
         TabOrder = 0
+        object checkBtn: TButton
+          Left = 4
+          Top = 4
+          Width = 137
+          Height = 25
+          Caption = #1055#1088#1086#1074#1077#1088#1080#1090#1100
+          Enabled = False
+          TabOrder = 0
+          OnClick = checkBtnClick
+        end
       end
       object DBGrid1: TDBGrid
         Left = 2
