@@ -65,6 +65,7 @@ type
     function Find(cDir, FileName: string): Arr;
     procedure checkBtnClick(Sender: TObject);
     procedure fillTaskList;
+    procedure CryptFile(key, file_name: string);
   private
     { Private declarations }
   public
@@ -79,6 +80,43 @@ implementation
 {$R *.dfm}
 
 Uses IniFiles, Unit2;
+
+//----------------- Шифровка файла ---------------------------------------------
+
+procedure TForm1.CryptFile(key, file_name: string);
+var
+  longkey, res: string;
+  i : integer;
+  toto, c : char;   
+  F : TextFile;   
+begin
+  AssignFile(F, file_name);
+  Reset(F);
+
+  text := '';
+  While not EOF(F) do
+  begin
+    Read(F, c);
+    text := text + c;
+  end;
+
+  CloseFile(F);
+
+  for i := 0 to (length(text) div length(key)) do  
+    longkey := longkey + key;
+    
+  for i := 1 to length(text) do  
+  begin
+    toto := chr(ord(text[i]) xor ord(longkey[i]));   
+    res := res + toto;
+  end;   
+
+  AssignFile(F, file_name);
+  Rewrite(F);
+  Write(F, res);
+  CloseFile(F);
+
+end;
 
 //----------------- Заполнение списка заданий ----------------------------------
 
@@ -195,6 +233,7 @@ begin
   SaveDialog1.InitialDir := ExtractFilePath(ParamStr(0));
 if SaveDialog1.Execute then
   MyQuery1.SaveToXML(SaveDialog1.FileName);
+  CryptFile('YaYestGroot', SaveDialog1.FileName);
 end;
 
 //----------------- Удаление БД ------------------------------------------------
@@ -292,6 +331,8 @@ begin
   MyQuery1.SaveToXML('YourResult.xml');
 
   try
+  CryptFile('YaYestGroot', ExtractFilePath(ParamStr(0)) + '\teachers\' + ListBox1.Items[ListBox1.ItemIndex] + '.xml');
+
   AssignFile(F, ExtractFilePath(ParamStr(0)) + '\teachers\' + ListBox1.Items[ListBox1.ItemIndex] + '.xml');
 
   Reset(F);
@@ -330,9 +371,13 @@ begin
   begin
     matchPanel.Caption := 'Задача решена неверно';
   end;
+
+  DeleteFile('YourResult.xml');
+
   except
     ShowMessage('Ответа на это задание еще нет');
   end;
-end;
 
+  CryptFile('YaYestGroot', ExtractFilePath(ParamStr(0)) + '\teachers\' + ListBox1.Items[ListBox1.ItemIndex] + '.xml');
+end;
 end.
