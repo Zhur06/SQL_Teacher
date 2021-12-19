@@ -3,7 +3,6 @@ object Form1: TForm1
   Top = 232
   Width = 1218
   Height = 775
-  Align = alCustom
   Caption = 'SQLTeacher'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET

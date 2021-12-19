@@ -65,7 +65,7 @@ type
     function Find(cDir, FileName: string): Arr;
     procedure checkBtnClick(Sender: TObject);
     procedure fillTaskList;
-    procedure CryptFile(key, file_name: string);
+    procedure CryptFile(file_name: string; key: char);
   private
     { Private declarations }
   public
@@ -83,12 +83,11 @@ Uses IniFiles, Unit2;
 
 //----------------- Шифровка файла ---------------------------------------------
 
-procedure TForm1.CryptFile(key, file_name: string);
+procedure TForm1.CryptFile(file_name: string; key: char);
 var
-  longkey, res: string;
-  i : integer;
-  toto, c : char;   
-  F : TextFile;   
+  res: string;
+  c : char;
+  F : TextFile;
 begin
   AssignFile(F, file_name);
   Reset(F);
@@ -97,19 +96,11 @@ begin
   While not EOF(F) do
   begin
     Read(F, c);
-    text := text + c;
+    c := chr(ord(c) xor ord(key));
+    res := res + c;
   end;
 
   CloseFile(F);
-
-  for i := 0 to (length(text) div length(key)) do  
-    longkey := longkey + key;
-    
-  for i := 1 to length(text) do  
-  begin
-    toto := chr(ord(text[i]) xor ord(longkey[i]));   
-    res := res + toto;
-  end;   
 
   AssignFile(F, file_name);
   Rewrite(F);
@@ -233,7 +224,7 @@ begin
   SaveDialog1.InitialDir := ExtractFilePath(ParamStr(0));
 if SaveDialog1.Execute then
   MyQuery1.SaveToXML(SaveDialog1.FileName);
-  CryptFile('№', SaveDialog1.FileName);
+  CryptFile(SaveDialog1.FileName, '№');
 end;
 
 //----------------- Удаление БД ------------------------------------------------
@@ -296,7 +287,7 @@ var
   iii: integer;
   A: arr;
 begin
- 
+
   n := 0;
   ChDir(cDir); // войти в каталог
 try
@@ -331,36 +322,26 @@ begin
   MyQuery1.SaveToXML('YourResult.xml');
 
   try
-  CryptFile('№', ExtractFilePath(ParamStr(0)) + '\teachers\' + ListBox1.Items[ListBox1.ItemIndex] + '.xml');
+  CryptFile(ExtractFilePath(ParamStr(0)) + '\teachers\' + ListBox1.Items[ListBox1.ItemIndex] + '.xml', '№');
 
   AssignFile(F, ExtractFilePath(ParamStr(0)) + '\teachers\' + ListBox1.Items[ListBox1.ItemIndex] + '.xml');
-
   Reset(F);
-
   answ := '';
-
   While not EOF(F) do
   begin
     Read(F, c);
     answ := answ + c;
   end;
-
   CloseFile(F);
 
-
-
   AssignFile(F, 'YourResult.xml');
-
   Reset(F);
-
   resul := '';
-
   While not EOF(F) do
   begin
     Read(F, c);
     resul := resul + c;
   end;
-
   CloseFile(F);
 
   if answ = resul then
@@ -374,10 +355,10 @@ begin
 
   DeleteFile('YourResult.xml');
 
+  CryptFile(ExtractFilePath(ParamStr(0)) + '\teachers\' + ListBox1.Items[ListBox1.ItemIndex] + '.xml', '№');
+
   except
     ShowMessage('Ответа на это задание еще нет');
   end;
-
-  CryptFile('№', ExtractFilePath(ParamStr(0)) + '\teachers\' + ListBox1.Items[ListBox1.ItemIndex] + '.xml');
 end;
 end.
