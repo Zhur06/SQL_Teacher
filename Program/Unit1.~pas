@@ -53,6 +53,7 @@ type
     taskLabel: TLabel;
     Splitter4: TSplitter;
     checkBtn: TButton;
+    Label5: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure goBtnClick(Sender: TObject);
     procedure doScriptBtnClick(Sender: TObject);
@@ -66,6 +67,7 @@ type
     procedure checkBtnClick(Sender: TObject);
     procedure fillTaskList;
     procedure CryptFile(file_name: string; key: char);
+    procedure doCustomizationSettings();
   private
     { Private declarations }
   public
@@ -134,6 +136,7 @@ begin
   Form1.Top:= (Screen.WorkAreaHeight - Form1.Height) div 2;
 
   fillTaskList;
+  doCustomizationSettings;
 end;
 
 //----------------- Выполнение команды -----------------------------------------
@@ -244,6 +247,7 @@ begin
     Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
     For i := elIndx to Ini.ReadInteger('ComboBox', 'MaxValue', 1) do
       Ini.WriteString('ComboBox', IntToStr(i), Ini.ReadString('ComboBox', intToStr(i + 1), ''));
+    Ini.Free;
   end;
 end;
 
@@ -361,4 +365,36 @@ begin
     ShowMessage('Ответа на это задание еще нет');
   end;
 end;
+
+//----------------- Применение пользовательских настроек -----------------------
+
+procedure TForm1.doCustomizationSettings;
+var
+  Ini: TIniFile;
+begin
+  Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\settings.ini');
+
+  Form1.Font.Name := Ini.ReadString('Font', 'Name', 'MS Sans Serif');
+  Form1.Font.Size := Ini.ReadInteger('Font', 'Size', 10);
+  Panel2.Width := Canvas.TextWidth('Всего строк: 999') + 16;
+  Panel2.Height := Canvas.TextHeight('Всего строк: 999') + 8;
+  goBtn.Width := Panel2.Width;
+  goBtn.Height := Panel2.Height;
+  checkBtn.Width := Panel2.Width;
+  checkBtn.Height := Panel2.Height;
+  Label4.Left := Label1.Left + Label1.Width + 2;
+  Label2.Left := Label3.Left + Label3.Width + 2;
+
+  dbCreateBtn.Height := Panel2.Height;
+  doScriptBtn.Height := Panel2.Height;
+  saveAnswerBtn.Height := Panel2.Height;
+  dbDeleteBtn.Height := Panel2.Height;
+
+  dbDeleteBtn.Top := 4 + (Panel2.Height + 8);
+  doScriptBtn.Top := 4 + (Panel2.Height + 8) * 2;
+  saveAnswerBtn.Top  := 4 + (Panel2.Height + 8) * 3;
+
+  Ini.Free;
+end;
+
 end.

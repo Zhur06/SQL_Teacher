@@ -7,13 +7,13 @@ object Form1: TForm1
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -13
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
   OnCreate = FormCreate
   PixelsPerInch = 96
-  TextHeight = 13
+  TextHeight = 16
   object Splitter1: TSplitter
     Left = 943
     Top = 0
@@ -27,12 +27,6 @@ object Form1: TForm1
     Width = 250
     Height = 736
     Align = alRight
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'MS Sans Serif'
-    Font.Style = []
-    ParentFont = False
     TabOrder = 0
     object PageControl1: TPageControl
       Left = 1
@@ -67,7 +61,7 @@ object Form1: TForm1
           Top = 4
           Width = 227
           Height = 37
-          Anchors = [akLeft, akTop, akRight]
+          Anchors = [akLeft, akRight]
           Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1041#1044
           TabOrder = 0
           OnClick = dbCreateBtnClick
@@ -77,7 +71,7 @@ object Form1: TForm1
           Top = 114
           Width = 227
           Height = 37
-          Anchors = [akLeft, akTop, akRight]
+          Anchors = [akLeft, akRight]
           Caption = #1042#1099#1087#1086#1083#1085#1080#1090#1100' '#1089#1082#1088#1080#1087#1090' '#1080#1079' '#1092#1072#1081#1083#1072
           Enabled = False
           TabOrder = 1
@@ -88,7 +82,7 @@ object Form1: TForm1
           Top = 168
           Width = 227
           Height = 37
-          Anchors = [akLeft, akTop, akRight]
+          Anchors = [akLeft, akRight]
           Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100' '#1086#1090#1074#1077#1090
           Enabled = False
           TabOrder = 2
@@ -99,7 +93,7 @@ object Form1: TForm1
           Top = 64
           Width = 225
           Height = 33
-          Anchors = [akLeft, akTop, akRight]
+          Anchors = [akLeft, akRight]
           Caption = #1059#1076#1072#1083#1080#1090#1100' '#1041#1044
           Enabled = False
           TabOrder = 3
@@ -141,12 +135,6 @@ object Form1: TForm1
     Width = 943
     Height = 736
     Align = alClient
-    Font.Charset = DEFAULT_CHARSET
-    Font.Color = clWindowText
-    Font.Height = -13
-    Font.Name = 'MS Sans Serif'
-    Font.Style = []
-    ParentFont = False
     TabOrder = 1
     object Splitter2: TSplitter
       Left = 1
@@ -172,18 +160,12 @@ object Form1: TForm1
       Align = alTop
       BiDiMode = bdLeftToRight
       Caption = '  '#1059#1089#1083#1086#1074#1080#1077'  '
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'MS Sans Serif'
-      Font.Style = []
       ParentBiDiMode = False
-      ParentFont = False
       TabOrder = 0
       object taskLabel: TLabel
-        Left = 2
+        Left = 6
         Top = 66
-        Width = 937
+        Width = 933
         Height = 60
         Align = alClient
         Caption = #1047#1076#1077#1089#1100' '#1073#1091#1076#1077#1090' '#1079#1072#1076#1072#1085#1080#1077
@@ -195,6 +177,14 @@ object Form1: TForm1
         Height = 9
         Cursor = crVSplit
         Align = alTop
+      end
+      object Label5: TLabel
+        Left = 2
+        Top = 66
+        Width = 4
+        Height = 60
+        Align = alLeft
+        AutoSize = False
       end
       object Panel7: TPanel
         Left = 2
@@ -212,15 +202,9 @@ object Form1: TForm1
         end
         object Label2: TLabel
           Left = 136
-          Top = 9
-          Width = 4
-          Height = 20
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -16
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          ParentFont = False
+          Top = 11
+          Width = 3
+          Height = 16
         end
       end
     end
@@ -267,9 +251,6 @@ object Form1: TForm1
       Align = alClient
       Caption = '  '#1056#1077#1079#1091#1083#1100#1090#1072#1090'  '
       TabOrder = 2
-      DesignSize = (
-        941
-        425)
       object matchPanel: TPanel
         Left = 2
         Top = 347
@@ -278,6 +259,9 @@ object Form1: TForm1
         Align = alBottom
         Caption = #1047#1076#1077#1089#1100' '#1073#1091#1076#1077#1090' '#1088#1077#1079#1091#1083#1100#1090#1072#1090' '#1087#1088#1086#1074#1077#1088#1082#1080' ('#1042#1077#1088#1085#1086'/'#1053#1077#1042#1077#1088#1085#1086')'
         TabOrder = 0
+        DesignSize = (
+          937
+          76)
         object checkBtn: TButton
           Left = 4
           Top = 4
@@ -287,6 +271,28 @@ object Form1: TForm1
           Enabled = False
           TabOrder = 0
           OnClick = checkBtnClick
+        end
+        object Panel2: TPanel
+          Left = 796
+          Top = 4
+          Width = 137
+          Height = 27
+          Anchors = [akTop, akRight]
+          TabOrder = 1
+          object Label1: TLabel
+            Left = 8
+            Top = 4
+            Width = 84
+            Height = 16
+            Caption = #1042#1089#1077#1075#1086' '#1089#1090#1088#1086#1082': '
+          end
+          object Label4: TLabel
+            Left = 96
+            Top = 4
+            Width = 7
+            Height = 16
+            Caption = '0'
+          end
         end
       end
       object DBGrid1: TDBGrid
@@ -303,27 +309,6 @@ object Form1: TForm1
         TitleFont.Height = -13
         TitleFont.Name = 'MS Sans Serif'
         TitleFont.Style = []
-      end
-      object Panel2: TPanel
-        Left = 792
-        Top = 304
-        Width = 137
-        Height = 33
-        Anchors = [akRight, akBottom]
-        TabOrder = 2
-        object Label1: TLabel
-          Left = 8
-          Top = 8
-          Width = 84
-          Height = 16
-          Caption = #1042#1089#1077#1075#1086' '#1089#1090#1088#1086#1082': '
-        end
-        object Label4: TLabel
-          Left = 96
-          Top = 8
-          Width = 3
-          Height = 16
-        end
       end
     end
   end
