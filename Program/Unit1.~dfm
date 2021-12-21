@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 471
-  Top = 232
+  Left = 597
+  Top = 180
   Width = 1218
   Height = 775
   Caption = 'SQLTeacher'
@@ -57,9 +57,9 @@ object Form1: TForm1
           240
           647)
         object dbCreateBtn: TButton
-          Left = 7
+          Left = 8
           Top = 4
-          Width = 227
+          Width = 222
           Height = 37
           Anchors = [akLeft, akRight]
           Caption = #1044#1086#1073#1072#1074#1080#1090#1100' '#1041#1044
@@ -67,9 +67,9 @@ object Form1: TForm1
           OnClick = dbCreateBtnClick
         end
         object doScriptBtn: TButton
-          Left = 6
+          Left = 8
           Top = 114
-          Width = 227
+          Width = 222
           Height = 37
           Anchors = [akLeft, akRight]
           Caption = #1042#1099#1087#1086#1083#1085#1080#1090#1100' '#1089#1082#1088#1080#1087#1090' '#1080#1079' '#1092#1072#1081#1083#1072
@@ -78,9 +78,9 @@ object Form1: TForm1
           OnClick = doScriptBtnClick
         end
         object saveAnswerBtn: TButton
-          Left = 7
+          Left = 8
           Top = 168
-          Width = 227
+          Width = 222
           Height = 37
           Anchors = [akLeft, akRight]
           Caption = #1057#1086#1093#1088#1072#1085#1080#1090#1100' '#1086#1090#1074#1077#1090
@@ -91,8 +91,8 @@ object Form1: TForm1
         object dbDeleteBtn: TButton
           Left = 8
           Top = 64
-          Width = 225
-          Height = 33
+          Width = 222
+          Height = 37
           Anchors = [akLeft, akRight]
           Caption = #1059#1076#1072#1083#1080#1090#1100' '#1041#1044
           Enabled = False
@@ -219,21 +219,19 @@ object Form1: TForm1
       DesignSize = (
         941
         163)
-      object Memo1: TMemo
+      object RichEdit1: TRichEdit
         Left = 2
         Top = 18
         Width = 937
         Height = 143
         Align = alClient
         Enabled = False
-        Lines.Strings = (
-          'SELECT *'
-          'FROM ')
         TabOrder = 0
+        OnChange = RichEdit1Change
       end
       object goBtn: TButton
         Left = 796
-        Top = 131
+        Top = 126
         Width = 137
         Height = 25
         Anchors = [akRight, akBottom]
@@ -289,8 +287,9 @@ object Form1: TForm1
           object Label4: TLabel
             Left = 96
             Top = 4
-            Width = 3
+            Width = 7
             Height = 16
+            Caption = '0'
           end
         end
       end

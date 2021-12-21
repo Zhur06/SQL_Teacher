@@ -14,7 +14,6 @@ type
   TForm1 = class(TForm)
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
-    Memo1: TMemo;
     goBtn: TButton;
     GroupBox5: TGroupBox;
     matchPanel: TPanel;
@@ -54,6 +53,7 @@ type
     Splitter4: TSplitter;
     checkBtn: TButton;
     Label5: TLabel;
+    RichEdit1: TRichEdit;
     procedure FormCreate(Sender: TObject);
     procedure goBtnClick(Sender: TObject);
     procedure doScriptBtnClick(Sender: TObject);
@@ -68,6 +68,8 @@ type
     procedure fillTaskList;
     procedure CryptFile(file_name: string; key: char);
     procedure doCustomizationSettings();
+    procedure glowKeyWords(keyWord: string; resFont, normalFont: TFont);
+    procedure RichEdit1Change(Sender: TObject);
   private
     { Private declarations }
   public
@@ -82,6 +84,57 @@ implementation
 {$R *.dfm}
 
 Uses IniFiles, Unit2;
+
+//----------------- Подсветка ключевых слов ------------------------------------
+
+Procedure TForm1.glowKeyWords(keyWord: string; resFont, normalFont: TFont);
+var
+  iill, newLines, pos: integer;
+  s: string;
+begin
+  newLines := 0;
+  For iill := 1 to length(RichEdit1.Text) do
+  begin
+    if AnsiLowerCase(RichEdit1.Text[iill]) = AnsiLowerCase(keyWord[1]) then
+    begin
+      s := Copy(RichEdit1.Text, iill, length(keyWord));
+
+      if AnsiLowerCase(s) = AnsiLowerCase(keyWord) then
+      with RichEdit1 do
+      begin
+        pos := SelStart;
+
+        SelStart := iill - 1;
+        SelLength := length(s);
+        with SelAttributes do
+        begin
+          Color := resFont.Color;
+          Charset := resFont.Charset;
+          Name := resFont.Name;
+          Pitch := resFont.Pitch;
+          Style := resFont.Style;
+          Size := resFont.Size
+        end;
+
+        SelStart := pos;
+        SelLength := 0;
+
+        with SelAttributes do
+        begin
+          Color := normalFont.Color;
+          Charset := normalFont.Charset;
+          Name := normalFont.Name;
+          Pitch := normalFont.Pitch;
+          Style := normalFont.Style;
+          Size := normalFont.Size
+        end;
+      end;
+    end;
+
+    if RichEdit1.Text[iill] = #10 then
+      newLines := newLines + 1;
+  end;
+end;
 
 //----------------- Шифровка файла ---------------------------------------------
 
@@ -146,7 +199,7 @@ begin
 with MyQuery1 do
 begin
   Close;
-  SQL.Text := Memo1.Text;
+  SQL.Text := RichEdit1.Text;
   Open;
 end;
   Label4.Caption := IntToStr(MyQuery1.RecordCount);
@@ -167,12 +220,12 @@ begin
   AssignFile(F, OpenDialog1.FileName);
   Reset(F);
 
-  Memo1.Text := '';
+  RichEdit1.Text := '';
 
   While not EOF(F) do
   begin
     Read(F, c);
-    Memo1.Text := Memo1.Text + c;
+    RichEdit1.Text := RichEdit1.Text + c;
   end;
 
   CloseFile(F);
@@ -185,7 +238,7 @@ procedure TForm1.ComboBox1Change(Sender: TObject);
 begin
   MyEmbConnection1.Connected := false;
   goBtn.Enabled := false;
-  Memo1.Enabled := false;
+  RichEdit1.Enabled := false;
   doScriptBtn.Enabled := false;
   dbDeleteBtn.Enabled := false;
   saveAnswerBtn.Enabled := false;
@@ -198,7 +251,7 @@ begin
       MyEmbConnection1.Database := ComboBox1.Text;
       MyEmbConnection1.Connected := true;
       goBtn.Enabled := true;
-      Memo1.Enabled := true;
+      RichEdit1.Enabled := true;
       doScriptBtn.Enabled := true;
       dbDeleteBtn.Enabled := true;
       saveAnswerBtn.Enabled := true;
@@ -394,7 +447,78 @@ begin
   doScriptBtn.Top := 4 + (Panel2.Height + 8) * 2;
   saveAnswerBtn.Top  := 4 + (Panel2.Height + 8) * 3;
 
+  RichEdit1.Color := Ini.ReadInteger('Colors', 'Memos', clWindow);
+  ListBox1.Color := Ini.ReadInteger('Colors', 'Memos', clWindow);
+  DBGrid1.Color := Ini.ReadInteger('Colors', 'Memos', clWindow);
+  ComboBox1.Color := Ini.ReadInteger('Colors', 'Memos', clWindow);
+
+  Form1.Color := Ini.ReadInteger('Colors', 'Panels', clBtnFace);
+  Panel4.Color := Ini.ReadInteger('Colors', 'Panels', clBtnFace);
+  GroupBox1.Color := Ini.ReadInteger('Colors', 'Panels', clBtnFace);
+  Panel5.Color := Ini.ReadInteger('Colors', 'Panels', clBtnFace);
+  GroupBox2.Color := Ini.ReadInteger('Colors', 'Panels', clBtnFace);
+  Label5.Color := Ini.ReadInteger('Colors', 'Panels', clBtnFace);
+  Panel7.Color := Ini.ReadInteger('Colors', 'Panels', clBtnFace);
+  Label3.Color := Ini.ReadInteger('Colors', 'Panels', clBtnFace);
+  Label2.Color := Ini.ReadInteger('Colors', 'Panels', clBtnFace);;
+  Splitter1.Color := Ini.ReadInteger('Colors', 'Panels', clBtnFace);
+  Splitter2.Color := Ini.ReadInteger('Colors', 'Panels', clBtnFace);
+  Splitter3.Color := Ini.ReadInteger('Colors', 'Panels', clBtnFace);
+  Splitter4.Color := Ini.ReadInteger('Colors', 'Panels', clBtnFace);
+  taskLabel.Color := Ini.ReadInteger('Colors', 'Panels', clBtnFace);
+  GroupBox3.Color := Ini.ReadInteger('Colors', 'Panels', clBtnFace);
+  matchPanel.Color := Ini.ReadInteger('Colors', 'Panels', clBtnFace);
+  Panel2.Color := Ini.ReadInteger('Colors', 'Panels', clBtnFace);
+  Label1.Color := Ini.ReadInteger('Colors', 'Panels', clBtnFace);
+  Label4.Color := Ini.ReadInteger('Colors', 'Panels', clBtnFace);
+
   Ini.Free;
 end;
 
+procedure TForm1.RichEdit1Change(Sender: TObject);
+var
+  keyFont: TFont;
+  pers: TPersistent;
+begin
+  keyFont := TFont.Create;
+  keyFont.Assign(RichEdit1.Font);
+  keyFont.Style := keyFont.Style + [fsBold];
+
+  glowKeyWords('SELECT', keyFont, RichEdit1.Font);
+  glowKeyWords('FROM', keyFont, RichEdit1.Font);
+  glowKeyWords('WHERE', keyFont, RichEdit1.Font);
+  glowKeyWords('GROUP BY', keyFont, RichEdit1.Font);
+  glowKeyWords('HAVING', keyFont, RichEdit1.Font);
+  glowKeyWords('ORDER BY', keyFont, RichEdit1.Font);
+  glowKeyWords('LIMIT', keyFont, RichEdit1.Font);
+  glowKeyWords('IF', keyFont, RichEdit1.Font);
+  glowKeyWords('THEN', keyFont, RichEdit1.Font);
+  glowKeyWords('ELSE', keyFont, RichEdit1.Font);
+  glowKeyWords('NOT', keyFont, RichEdit1.Font);
+  glowKeyWords('OR', keyFont, RichEdit1.Font);
+  glowKeyWords('AND', keyFont, RichEdit1.Font);
+  glowKeyWords('DISTINCT', keyFont, RichEdit1.Font);
+  glowKeyWords('ALL', keyFont, RichEdit1.Font);
+  glowKeyWords('AS', keyFont, RichEdit1.Font);
+  glowKeyWords('INNER', keyFont, RichEdit1.Font);
+  glowKeyWords('LEFT', keyFont, RichEdit1.Font);
+  glowKeyWords('RIGHT', keyFont, RichEdit1.Font);
+  glowKeyWords('FULL', keyFont, RichEdit1.Font);
+  glowKeyWords('JOIN', keyFont, RichEdit1.Font);
+  glowKeyWords('ON', keyFont, RichEdit1.Font);
+  glowKeyWords('ANY', keyFont, RichEdit1.Font);
+  glowKeyWords('BETWEEN', keyFont, RichEdit1.Font);
+  glowKeyWords('LIKE', keyFont, RichEdit1.Font);
+  glowKeyWords('IS', keyFont, RichEdit1.Font);
+  glowKeyWords('NULL', keyFont, RichEdit1.Font);
+  glowKeyWords('EXIST', keyFont, RichEdit1.Font);
+  glowKeyWords('UNIQUE', keyFont, RichEdit1.Font);
+  glowKeyWords('COUNT', keyFont, RichEdit1.Font);
+  glowKeyWords('MAX', keyFont, RichEdit1.Font);
+  glowKeyWords('MIN', keyFont, RichEdit1.Font);
+  glowKeyWords('SUM', keyFont, RichEdit1.Font);
+  glowKeyWords('AVG', keyFont, RichEdit1.Font);
+  glowKeyWords('UNION', keyFont, RichEdit1.Font);
+end;
+                 
 end.
