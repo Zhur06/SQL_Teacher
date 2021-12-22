@@ -54,6 +54,7 @@ type
     checkBtn: TButton;
     Label5: TLabel;
     RichEdit1: TRichEdit;
+    settingsBtn: TButton;
     procedure FormCreate(Sender: TObject);
     procedure goBtnClick(Sender: TObject);
     procedure doScriptBtnClick(Sender: TObject);
@@ -70,9 +71,11 @@ type
     procedure doCustomizationSettings();
     procedure glowKeyWords(keyWord: string; resFont, normalFont: TFont);
     procedure RichEdit1Change(Sender: TObject);
+    procedure settingsBtnClick(Sender: TObject);
   private
     { Private declarations }
   public
+    keyFont: TFont;
     { Public declarations }
   end;
 
@@ -83,7 +86,7 @@ implementation
 
 {$R *.dfm}
 
-Uses IniFiles, Unit2;
+Uses IniFiles, Unit2, Unit3;
 
 //----------------- Подсветка ключевых слов ------------------------------------
 
@@ -427,8 +430,19 @@ var
 begin
   Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\settings.ini');
 
-  Form1.Font.Name := Ini.ReadString('Font', 'Name', 'MS Sans Serif');
-  Form1.Font.Size := Ini.ReadInteger('Font', 'Size', 10);
+  Form1.Font.Name := Ini.ReadString('Font', 'Name', Form1.Font.Name);
+  Form1.Font.Size := Ini.ReadInteger('Font', 'Size', Form1.Font.Size);
+  Form1.Font.Charset := Ini.ReadInteger('Font', 'Charset', Form1.Font.Charset);
+  Form1.Font.Color := Ini.ReadInteger('Font', 'Color', Form1.Font.Color);
+
+  keyFont := TFont.Create;
+  keyFont.Assign(RichEdit1.Font);
+
+  keyFont.Name := Ini.ReadString('Font', 'Name', Form1.Font.Name);
+  keyFont.Size := Ini.ReadInteger('Font', 'Size', Form1.Font.Size);
+  keyFont.Charset := Ini.ReadInteger('Font', 'Charset', Form1.Font.Charset);
+  keyFont.Color := Ini.ReadInteger('Font', 'Color', Form1.Font.Color);
+
   Panel2.Width := Canvas.TextWidth('Всего строк: 999') + 16;
   Panel2.Height := Canvas.TextHeight('Всего строк: 999') + 8;
   goBtn.Width := Panel2.Width;
@@ -442,6 +456,7 @@ begin
   doScriptBtn.Height := Panel2.Height;
   saveAnswerBtn.Height := Panel2.Height;
   dbDeleteBtn.Height := Panel2.Height;
+  settingsBtn.Height := Panel2.Height;
 
   dbDeleteBtn.Top := 4 + (Panel2.Height + 8);
   doScriptBtn.Top := 4 + (Panel2.Height + 8) * 2;
@@ -476,14 +491,7 @@ begin
 end;
 
 procedure TForm1.RichEdit1Change(Sender: TObject);
-var
-  keyFont: TFont;
-  pers: TPersistent;
 begin
-  keyFont := TFont.Create;
-  keyFont.Assign(RichEdit1.Font);
-  keyFont.Style := keyFont.Style + [fsBold];
-
   glowKeyWords('SELECT', keyFont, RichEdit1.Font);
   glowKeyWords('FROM', keyFont, RichEdit1.Font);
   glowKeyWords('WHERE', keyFont, RichEdit1.Font);
@@ -521,4 +529,10 @@ begin
   glowKeyWords('UNION', keyFont, RichEdit1.Font);
 end;
                  
+procedure TForm1.settingsBtnClick(Sender: TObject);
+begin
+  Form3 := TForm3.Create(Self);
+  Form3.Show;
+end;
+
 end.

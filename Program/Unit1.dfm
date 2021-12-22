@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 597
-  Top = 180
+  Left = 246
+  Top = 143
   Width = 1218
   Height = 775
   Caption = 'SQLTeacher'
@@ -38,6 +38,9 @@ object Form1: TForm1
       TabOrder = 0
       object TabSheet1: TTabSheet
         Caption = #1047#1072#1076#1072#1085#1080#1103
+        DesignSize = (
+          240
+          647)
         object ListBox1: TListBox
           Left = 0
           Top = 0
@@ -47,6 +50,16 @@ object Form1: TForm1
           ItemHeight = 16
           TabOrder = 0
           OnClick = ListBox1Click
+        end
+        object settingsBtn: TButton
+          Left = 8
+          Top = 616
+          Width = 225
+          Height = 25
+          Anchors = [akLeft, akRight, akBottom]
+          Caption = #1053#1072#1089#1090#1088#1086#1081#1082#1080
+          TabOrder = 1
+          OnClick = settingsBtnClick
         end
       end
       object TabSheet2: TTabSheet
