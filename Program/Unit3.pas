@@ -141,6 +141,8 @@ end;
 procedure TForm3.FormActivate(Sender: TObject);
 var Ini1: TIniFile;
 begin
+  Form3.Left:= (Screen.WorkAreaWidth - Form3.Width) div 2;
+  Form3.Top:= (Screen.WorkAreaHeight - Form3.Height) div 2;
   Ini1 := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\settings.ini');
   Form3.Color := Ini1.ReadInteger('Colors', 'Panels', Form3.Color);
   Form3.Edit1.Color := Ini1.ReadInteger('Colors', 'Memos', Form3.Edit1.Color);

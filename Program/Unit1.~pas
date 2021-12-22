@@ -430,10 +430,18 @@ var
 begin
   Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\settings.ini');
 
-  Form1.Font.Name := Ini.ReadString('Font', 'Name', 'MS Sans Serif');
-  Form1.Font.Size := Ini.ReadInteger('Font', 'Size', 10);
+  Form1.Font.Name := Ini.ReadString('Font', 'Name', Form1.Font.Name);
+  Form1.Font.Size := Ini.ReadInteger('Font', 'Size', Form1.Font.Size);
   Form1.Font.Charset := Ini.ReadInteger('Font', 'Charset', Form1.Font.Charset);
   Form1.Font.Color := Ini.ReadInteger('Font', 'Color', Form1.Font.Color);
+
+  keyFont := TFont.Create;
+  keyFont.Assign(RichEdit1.Font);
+
+  keyFont.Name := Ini.ReadString('Font', 'Name', Form1.Font.Name);
+  keyFont.Size := Ini.ReadInteger('Font', 'Size', Form1.Font.Size);
+  keyFont.Charset := Ini.ReadInteger('Font', 'Charset', Form1.Font.Charset);
+  keyFont.Color := Ini.ReadInteger('Font', 'Color', Form1.Font.Color);
 
   Panel2.Width := Canvas.TextWidth('Всего строк: 999') + 16;
   Panel2.Height := Canvas.TextHeight('Всего строк: 999') + 8;
@@ -484,10 +492,6 @@ end;
 
 procedure TForm1.RichEdit1Change(Sender: TObject);
 begin
-  keyFont := TFont.Create;
-  keyFont.Assign(RichEdit1.Font);
-  keyFont.Style := keyFont.Style + [fsBold];
-
   glowKeyWords('SELECT', keyFont, RichEdit1.Font);
   glowKeyWords('FROM', keyFont, RichEdit1.Font);
   glowKeyWords('WHERE', keyFont, RichEdit1.Font);

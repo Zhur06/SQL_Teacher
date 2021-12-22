@@ -92,10 +92,9 @@ Uses IniFiles, Unit2, Unit3;
 
 Procedure TForm1.glowKeyWords(keyWord: string; resFont, normalFont: TFont);
 var
-  iill, newLines, pos: integer;
+  iill, pos: integer;
   s: string;
 begin
-  newLines := 0;
   For iill := 1 to length(RichEdit1.Text) do
   begin
     if AnsiLowerCase(RichEdit1.Text[iill]) = AnsiLowerCase(keyWord[1]) then
@@ -133,9 +132,6 @@ begin
         end;
       end;
     end;
-
-    if RichEdit1.Text[iill] = #10 then
-      newLines := newLines + 1;
   end;
 end;
 

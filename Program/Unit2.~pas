@@ -16,7 +16,6 @@ type
     Button2: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
   private
     { Private declarations }

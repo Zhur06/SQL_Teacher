@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls;
+  Dialogs, StdCtrls, ExtCtrls;
 
 type
   TForm3 = class(TForm)
@@ -21,11 +21,14 @@ type
     changeMemoColorBtn: TButton;
     Label4: TLabel;
     changeThemeColorBtn: TButton;
+    Splitter1: TSplitter;
+    Splitter2: TSplitter;
     procedure changeMainFontBtnClick(Sender: TObject);
     procedure changeSecondFontBtnClick(Sender: TObject);
     procedure changeMemoColorBtnClick(Sender: TObject);
     procedure changeThemeColorBtnClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -152,6 +155,12 @@ begin
   Form3.Label2.Font.Charset := Ini1.ReadInteger('keyFont', 'Charset', Form3.Font.Charset);
   Form3.Label2.Font.Color := Ini1.ReadInteger('keyFont', 'Color', Form3.Font.Color);
   Ini1.Free;
+end;
+
+procedure TForm3.FormCreate(Sender: TObject);
+begin
+  Form3.Left:= (Screen.WorkAreaWidth - Form3.Width) div 2;
+  Form3.Top:= (Screen.WorkAreaHeight - Form3.Height) div 2;
 end;
 
 end.
