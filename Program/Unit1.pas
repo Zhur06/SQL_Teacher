@@ -72,6 +72,7 @@ type
     procedure glowKeyWords(keyWord: string; resFont, normalFont: TFont);
     procedure RichEdit1Change(Sender: TObject);
     procedure settingsBtnClick(Sender: TObject);
+    procedure changeWordFont(var keyWord, txt: string; iill: integer; resFont, normalFont: TFont);
   private
     { Private declarations }
   public
@@ -88,26 +89,26 @@ implementation
 
 Uses IniFiles, Unit2, Unit3;
 
-//----------------- Подсветка ключевых слов ------------------------------------
+//----------------- Изменение шрифта -------------------------------------------
 
-Procedure TForm1.glowKeyWords(keyWord: string; resFont, normalFont: TFont);
+procedure TForm1.changeWordFont(var keyWord, txt: string; iill: integer; resFont, normalFont: TFont);
 var
-  iill, pos: integer;
   s: string;
+  pos: integer;
 begin
-  For iill := 1 to length(RichEdit1.Text) do
-  begin
-    if AnsiLowerCase(RichEdit1.Text[iill]) = AnsiLowerCase(keyWord[1]) then
+    if AnsiLowerCase(txt[iill]) = AnsiLowerCase(keyWord[1]) then
     begin
-      s := Copy(RichEdit1.Text, iill, length(keyWord));
+      s := Copy(txt, iill, length(keyWord));
 
       if AnsiLowerCase(s) = AnsiLowerCase(keyWord) then
       with RichEdit1 do
       begin
         pos := SelStart;
 
-        SelStart := iill - 1;
-        SelLength := length(s);
+        if keyWord[1] = #13 then
+          SelStart := iill
+        else SelStart := iill - 1;
+        SelLength := length(s) - 2;
         with SelAttributes do
         begin
           Color := resFont.Color;
@@ -132,6 +133,42 @@ begin
         end;
       end;
     end;
+end;
+
+//----------------- Подсветка ключевых слов ------------------------------------
+
+Procedure TForm1.glowKeyWords(keyWord: string; resFont, normalFont: TFont);
+var
+  iill, pos1: integer;
+  k1, k2, k3, k4, txt: string;
+  Ini: TIniFile;
+begin
+  txt := ' ' + RichEdit1.Text + ' ';
+
+  k1 := ' ' + keyWord + ' ';
+  k2 := ' ' + keyWord + #13 + #10;
+  k3 := #13 + #10 + keyWord + ' ';
+  k4 := #13 + #10 + keyWord + #13 + #10;
+                                 {
+  RichEdit1.SelStart := 0;
+  RichEdit1.SelLength := length(RichEdit1.Text);
+
+  Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
+  RichEdit1.SelAttributes.Name := Ini.ReadString('Font', 'Name', RichEdit1.SelAttributes.Name);
+  RichEdit1.SelAttributes.Size := Ini.ReadInteger('Font', 'Size', RichEdit1.SelAttributes.Size);
+  RichEdit1.SelAttributes.Charset := Ini.ReadInteger('Font', 'Charset', RichEdit1.SelAttributes.Charset);
+  RichEdit1.SelAttributes.Color := Ini.ReadInteger('Font', 'Color', RichEdit1.SelAttributes.Color);
+  Ini.Free;
+
+  RichEdit1.SelLength := 0;
+  RichEdit1.SelStart := pos1;   }
+
+  For iill := 1 to length(RichEdit1.Text) do
+  begin
+    changeWordFont(k1, txt, iill, resFont, normalFont);
+    changeWordFont(k2, txt, iill, resFont, normalFont);
+    changeWordFont(k3, txt, iill, resFont, normalFont);
+    changeWordFont(k4, txt, iill, resFont, normalFont);
   end;
 end;
 
@@ -442,10 +479,10 @@ begin
   keyFont := TFont.Create;
   keyFont.Assign(RichEdit1.Font);
 
-  keyFont.Name := Ini.ReadString('Font', 'Name', Form1.Font.Name);
-  keyFont.Size := Ini.ReadInteger('Font', 'Size', Form1.Font.Size);
-  keyFont.Charset := Ini.ReadInteger('Font', 'Charset', Form1.Font.Charset);
-  keyFont.Color := Ini.ReadInteger('Font', 'Color', Form1.Font.Color);
+  keyFont.Name := Ini.ReadString('keyFont', 'Name', Form1.Font.Name);
+  keyFont.Size := Ini.ReadInteger('keyFont', 'Size', Form1.Font.Size);
+  keyFont.Charset := Ini.ReadInteger('keyFont', 'Charset', Form1.Font.Charset);
+  keyFont.Color := Ini.ReadInteger('keyFont', 'Color', Form1.Font.Color);
 
   Panel2.Width := Canvas.TextWidth('Всего строк: 999') + 16;
   Panel2.Height := Canvas.TextHeight('Всего строк: 999') + 8;
