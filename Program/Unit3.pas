@@ -41,7 +41,7 @@ implementation
 
 {$R *.dfm}
 
-Uses IniFiles, Unit1;
+Uses IniFiles, Unit1, Unit2;
 
 procedure TForm3.changeMainFontBtnClick(Sender: TObject);
 var Ini : TIniFile;
@@ -54,6 +54,8 @@ begin
     Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\settings.ini');
 
     Form3.Font := Font;
+
+    If Form2.Enabled then Form2.Font := Font;
 
     Ini.WriteString('Font', 'Name', Font.Name);
     Ini.WriteInteger('Font', 'Size', Font.Size);
@@ -96,6 +98,8 @@ begin
 
     Edit1.Color := ColorDialog1.Color;
 
+    If Form2.Enabled then Form2.dbName.Color := ColorDialog1.Color;
+
     Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\settings.ini');
     Ini.WriteInteger('Colors', 'Memos', ColorDialog1.Color);
     Ini.Free;
@@ -131,6 +135,8 @@ begin
     Form3.Color := Color;
     GroupBox1.Color := Color;
     GroupBox2.Color := Color;
+
+    If Form2.Enabled then Form2.Color := Color;
 
     Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\settings.ini');
     Ini.WriteInteger('Colors', 'Panels', ColorDialog1.Color);
