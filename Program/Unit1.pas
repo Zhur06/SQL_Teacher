@@ -149,19 +149,19 @@ begin
   k2 := ' ' + keyWord + #13 + #10;
   k3 := #13 + #10 + keyWord + ' ';
   k4 := #13 + #10 + keyWord + #13 + #10;
-                                 {
-  RichEdit1.SelStart := 0;
-  RichEdit1.SelLength := length(RichEdit1.Text);
+                                 
+  //RichEdit1.SelStart := 0;
+  //RichEdit1.SelLength := length(RichEdit1.Text);
 
-  Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
+  Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\settings.ini');
   RichEdit1.SelAttributes.Name := Ini.ReadString('Font', 'Name', RichEdit1.SelAttributes.Name);
   RichEdit1.SelAttributes.Size := Ini.ReadInteger('Font', 'Size', RichEdit1.SelAttributes.Size);
   RichEdit1.SelAttributes.Charset := Ini.ReadInteger('Font', 'Charset', RichEdit1.SelAttributes.Charset);
   RichEdit1.SelAttributes.Color := Ini.ReadInteger('Font', 'Color', RichEdit1.SelAttributes.Color);
   Ini.Free;
 
-  RichEdit1.SelLength := 0;
-  RichEdit1.SelStart := pos1;   }
+  //RichEdit1.SelLength := 0;
+  //RichEdit1.SelStart := pos1;
 
   For iill := 1 to length(RichEdit1.Text) do
   begin
