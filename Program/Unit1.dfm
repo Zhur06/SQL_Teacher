@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 246
-  Top = 143
+  Left = 112
+  Top = 1
   Width = 1218
   Height = 775
   Caption = 'SQLTeacher'
@@ -15,9 +15,9 @@ object Form1: TForm1
   PixelsPerInch = 96
   TextHeight = 16
   object Splitter1: TSplitter
-    Left = 943
+    Left = 947
     Top = 0
-    Width = 9
+    Width = 5
     Height = 736
     Align = alRight
   end
@@ -38,14 +38,15 @@ object Form1: TForm1
       TabOrder = 0
       object TabSheet1: TTabSheet
         Caption = #1047#1072#1076#1072#1085#1080#1103
+        TabVisible = False
         DesignSize = (
           240
-          647)
+          668)
         object ListBox1: TListBox
           Left = 0
           Top = 0
           Width = 240
-          Height = 647
+          Height = 668
           Align = alClient
           ItemHeight = 16
           TabOrder = 0
@@ -53,7 +54,7 @@ object Form1: TForm1
         end
         object settingsBtn: TButton
           Left = 8
-          Top = 616
+          Top = 637
           Width = 225
           Height = 25
           Anchors = [akLeft, akRight, akBottom]
@@ -68,10 +69,10 @@ object Form1: TForm1
         TabVisible = False
         DesignSize = (
           240
-          647)
+          668)
         object dbCreateBtn: TButton
           Left = 8
-          Top = 4
+          Top = 5
           Width = 222
           Height = 37
           Anchors = [akLeft, akRight]
@@ -81,7 +82,7 @@ object Form1: TForm1
         end
         object doScriptBtn: TButton
           Left = 8
-          Top = 114
+          Top = 118
           Width = 222
           Height = 37
           Anchors = [akLeft, akRight]
@@ -92,7 +93,7 @@ object Form1: TForm1
         end
         object saveAnswerBtn: TButton
           Left = 8
-          Top = 168
+          Top = 174
           Width = 222
           Height = 37
           Anchors = [akLeft, akRight]
@@ -103,7 +104,7 @@ object Form1: TForm1
         end
         object dbDeleteBtn: TButton
           Left = 8
-          Top = 64
+          Top = 67
           Width = 222
           Height = 37
           Anchors = [akLeft, akRight]
@@ -145,30 +146,30 @@ object Form1: TForm1
   object Panel5: TPanel
     Left = 0
     Top = 0
-    Width = 943
+    Width = 947
     Height = 736
     Align = alClient
     TabOrder = 1
     object Splitter2: TSplitter
       Left = 1
       Top = 129
-      Width = 941
-      Height = 9
+      Width = 945
+      Height = 5
       Cursor = crVSplit
       Align = alTop
     end
     object Splitter3: TSplitter
       Left = 1
-      Top = 301
-      Width = 941
-      Height = 9
+      Top = 297
+      Width = 945
+      Height = 5
       Cursor = crVSplit
       Align = alTop
     end
     object GroupBox2: TGroupBox
       Left = 1
       Top = 1
-      Width = 941
+      Width = 945
       Height = 128
       Align = alTop
       BiDiMode = bdLeftToRight
@@ -177,32 +178,32 @@ object Form1: TForm1
       TabOrder = 0
       object taskLabel: TLabel
         Left = 6
-        Top = 66
-        Width = 933
-        Height = 60
+        Top = 62
+        Width = 937
+        Height = 64
         Align = alClient
         Caption = #1047#1076#1077#1089#1100' '#1073#1091#1076#1077#1090' '#1079#1072#1076#1072#1085#1080#1077
       end
       object Splitter4: TSplitter
         Left = 2
         Top = 57
-        Width = 937
-        Height = 9
+        Width = 941
+        Height = 5
         Cursor = crVSplit
         Align = alTop
       end
       object Label5: TLabel
         Left = 2
-        Top = 66
+        Top = 62
         Width = 4
-        Height = 60
+        Height = 64
         Align = alLeft
         AutoSize = False
       end
       object Panel7: TPanel
         Left = 2
         Top = 18
-        Width = 937
+        Width = 941
         Height = 39
         Align = alTop
         TabOrder = 0
@@ -223,19 +224,19 @@ object Form1: TForm1
     end
     object GroupBox3: TGroupBox
       Left = 1
-      Top = 138
-      Width = 941
+      Top = 134
+      Width = 945
       Height = 163
       Align = alTop
       Caption = '  SQL '#1082#1086#1076'  '
       TabOrder = 1
       DesignSize = (
-        941
+        945
         163)
       object RichEdit1: TRichEdit
         Left = 2
         Top = 18
-        Width = 937
+        Width = 941
         Height = 143
         Align = alClient
         Enabled = False
@@ -243,7 +244,7 @@ object Form1: TForm1
         OnChange = RichEdit1Change
       end
       object goBtn: TButton
-        Left = 796
+        Left = 800
         Top = 126
         Width = 137
         Height = 25
@@ -256,22 +257,22 @@ object Form1: TForm1
     end
     object GroupBox5: TGroupBox
       Left = 1
-      Top = 310
-      Width = 941
-      Height = 425
+      Top = 302
+      Width = 945
+      Height = 433
       Align = alClient
       Caption = '  '#1056#1077#1079#1091#1083#1100#1090#1072#1090'  '
       TabOrder = 2
       object matchPanel: TPanel
         Left = 2
-        Top = 347
-        Width = 937
+        Top = 355
+        Width = 941
         Height = 76
         Align = alBottom
         Caption = #1047#1076#1077#1089#1100' '#1073#1091#1076#1077#1090' '#1088#1077#1079#1091#1083#1100#1090#1072#1090' '#1087#1088#1086#1074#1077#1088#1082#1080' ('#1042#1077#1088#1085#1086'/'#1053#1077#1042#1077#1088#1085#1086')'
         TabOrder = 0
         DesignSize = (
-          937
+          941
           76)
         object checkBtn: TButton
           Left = 4
@@ -284,7 +285,7 @@ object Form1: TForm1
           OnClick = checkBtnClick
         end
         object Panel2: TPanel
-          Left = 796
+          Left = 800
           Top = 4
           Width = 137
           Height = 27
@@ -309,8 +310,8 @@ object Form1: TForm1
       object DBGrid1: TDBGrid
         Left = 2
         Top = 18
-        Width = 937
-        Height = 329
+        Width = 941
+        Height = 337
         Align = alClient
         DataSource = DataSource1
         Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgConfirmDelete, dgCancelOnExit]

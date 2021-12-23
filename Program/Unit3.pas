@@ -147,12 +147,12 @@ begin
   Form3.Color := Ini1.ReadInteger('Colors', 'Panels', Form3.Color);
   Form3.Edit1.Color := Ini1.ReadInteger('Colors', 'Memos', Form3.Edit1.Color);
   Form3.Font.Name := Ini1.ReadString('Font', 'Name', Form3.Font.Name);
-  Form3.Font.Size := Ini1.ReadInteger('Font', 'Name', Form3.Font.Size);
+  Form3.Font.Size := Ini1.ReadInteger('Font', 'Size', Form3.Font.Size);
   Form3.Font.Charset := Ini1.ReadInteger('Font', 'Charset', Form3.Font.Charset);
   Form3.Font.Color := Ini1.ReadInteger('Font', 'Color', Form3.Font.Color);
 
   Form3.Label2.Font.Name := Ini1.ReadString('keyFont', 'Name', Form3.Font.Name);
-  Form3.Label2.Font.Size := Ini1.ReadInteger('keyFont', 'Name', Form3.Font.Size);
+  Form3.Label2.Font.Size := Ini1.ReadInteger('keyFont', 'Size', Form3.Font.Size);
   Form3.Label2.Font.Charset := Ini1.ReadInteger('keyFont', 'Charset', Form3.Font.Charset);
   Form3.Label2.Font.Color := Ini1.ReadInteger('keyFont', 'Color', Form3.Font.Color);
   Ini1.Free;

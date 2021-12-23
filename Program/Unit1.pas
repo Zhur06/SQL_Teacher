@@ -331,7 +331,15 @@ end;
 
 procedure TForm1.showTeacherExecute(Sender: TObject);
 begin
-  TabSheet2.TabVisible := not TabSheet2.TabVisible;
+  //TabSheet2.TabVisible := not TabSheet2.TabVisible;
+  with PageControl1 do
+  begin
+    case ActivePageIndex of
+      0: ActivePageIndex := 1;
+      1: ActivePageIndex := 0;
+    end;
+  end;
+
 end;
 
 //----------------- Вывод названий всех файлов заданного расширения в указ. директории

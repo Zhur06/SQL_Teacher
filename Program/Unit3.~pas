@@ -28,7 +28,6 @@ type
     procedure changeMemoColorBtnClick(Sender: TObject);
     procedure changeThemeColorBtnClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -142,25 +141,21 @@ end;
 procedure TForm3.FormActivate(Sender: TObject);
 var Ini1: TIniFile;
 begin
+  Form3.Left:= (Screen.WorkAreaWidth - Form3.Width) div 2;
+  Form3.Top:= (Screen.WorkAreaHeight - Form3.Height) div 2;
   Ini1 := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\settings.ini');
   Form3.Color := Ini1.ReadInteger('Colors', 'Panels', Form3.Color);
   Form3.Edit1.Color := Ini1.ReadInteger('Colors', 'Memos', Form3.Edit1.Color);
   Form3.Font.Name := Ini1.ReadString('Font', 'Name', Form3.Font.Name);
-  Form3.Font.Size := Ini1.ReadInteger('Font', 'Name', Form3.Font.Size);
+  Form3.Font.Size := Ini1.ReadInteger('Font', 'Size', Form3.Font.Size);
   Form3.Font.Charset := Ini1.ReadInteger('Font', 'Charset', Form3.Font.Charset);
   Form3.Font.Color := Ini1.ReadInteger('Font', 'Color', Form3.Font.Color);
 
   Form3.Label2.Font.Name := Ini1.ReadString('keyFont', 'Name', Form3.Font.Name);
-  Form3.Label2.Font.Size := Ini1.ReadInteger('keyFont', 'Name', Form3.Font.Size);
+  Form3.Label2.Font.Size := Ini1.ReadInteger('keyFont', 'Size', Form3.Font.Size);
   Form3.Label2.Font.Charset := Ini1.ReadInteger('keyFont', 'Charset', Form3.Font.Charset);
   Form3.Label2.Font.Color := Ini1.ReadInteger('keyFont', 'Color', Form3.Font.Color);
   Ini1.Free;
-end;
-
-procedure TForm3.FormCreate(Sender: TObject);
-begin
-  Form3.Left:= (Screen.WorkAreaWidth - Form3.Width) div 2;
-  Form3.Top:= (Screen.WorkAreaHeight - Form3.Height) div 2;
 end;
 
 end.

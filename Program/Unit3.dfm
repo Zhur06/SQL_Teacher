@@ -17,10 +17,11 @@ object Form3: TForm3
   object Splitter1: TSplitter
     Left = 185
     Top = 0
+    Width = 5
     Height = 402
   end
   object Splitter2: TSplitter
-    Left = 372
+    Left = 374
     Top = 0
     Height = 402
   end
@@ -77,7 +78,7 @@ object Form3: TForm3
     end
   end
   object GroupBox2: TGroupBox
-    Left = 188
+    Left = 190
     Top = 0
     Width = 184
     Height = 402
