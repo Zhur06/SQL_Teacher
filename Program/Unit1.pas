@@ -55,6 +55,7 @@ type
     Label5: TLabel;
     RichEdit1: TRichEdit;
     settingsBtn: TButton;
+    trueAnsw: TAction;
     procedure FormCreate(Sender: TObject);
     procedure goBtnClick(Sender: TObject);
     procedure doScriptBtnClick(Sender: TObject);
@@ -73,6 +74,8 @@ type
     procedure RichEdit1Change(Sender: TObject);
     procedure settingsBtnClick(Sender: TObject);
     procedure changeWordFont(var keyWord, txt: string; iill: integer; resFont, normalFont: TFont);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure trueAnswExecute(Sender: TObject);
   private
     { Private declarations }
   public
@@ -139,7 +142,7 @@ end;
 
 Procedure TForm1.glowKeyWords(keyWord: string; resFont, normalFont: TFont);
 var
-  iill, pos1: integer;
+  iill: integer;
   k1, k2, k3, k4, txt: string;
   Ini: TIniFile;
 begin
@@ -219,10 +222,11 @@ begin
   Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
   For i := 1 to Ini.ReadInteger('ComboBox', 'MaxValue', 1) do
     ComboBox1.AddItem(Ini.ReadString('ComboBox', IntToStr(i), ''), Self);
-  Ini.Free;
 
-  Form1.Left:= (Screen.WorkAreaWidth - Form1.Width) div 2;
-  Form1.Top:= (Screen.WorkAreaHeight - Form1.Height) div 2;
+  Form1.Left := Ini.ReadInteger('MainForm', 'Left', (Screen.WorkAreaWidth - Form1.Width) div 2);
+  Form1.Top := Ini.ReadInteger('MainForm', 'Top', (Screen.WorkAreaHeight - Form1.Height) div 2);
+
+  Ini.Free;
 
   fillTaskList;
   doCustomizationSettings;
@@ -333,7 +337,7 @@ end;
 //----------------- Удаление БД ------------------------------------------------
 
 procedure TForm1.dbDeleteBtnClick(Sender: TObject);
-var Ini: Tinifile; i, val, elIndx: integer;
+var Ini: Tinifile; i, val: integer;
 begin
   if MyEmbConnection1.Connected = true then
   begin
@@ -351,7 +355,6 @@ begin
     Ini.WriteInteger('ComboBox', 'MaxValue', val);
     Ini.Free;
      
-    elIndx := ComboBox1.ItemIndex;
     ComboBox1.DeleteSelected;
     ComboBox1.ItemIndex := 0;
     ComboBox1Change(Self);
@@ -480,6 +483,10 @@ begin
     ShowMessage('Ответа на это задание еще нет');
   end;
 end;
+procedure TForm1.trueAnswExecute(Sender: TObject);
+begin
+  matchPanel.Caption := 'Задача решена верно';
+end;
 
 //----------------- Применение пользовательских настроек -----------------------
 
@@ -591,11 +598,24 @@ begin
 
   matchPanel.Caption := 'Здесь будет результат проверки (Верно/НеВерно)';
 end;
-                 
+
+//----------------- Вызов окна настроек ----------------------------------------
+
 procedure TForm1.settingsBtnClick(Sender: TObject);
 begin
   Form3 := TForm3.Create(Self);
   Form3.Show;
+end;
+
+//----------------- Закрытие окна ----------------------------------------------
+
+procedure TForm1.FormClose(Sender: TObject; var Action: TCloseAction);
+var Ini: TIniFile;
+begin
+  Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
+  Ini.WriteInteger('MainForm', 'Left', Form1.Left);
+  Ini.WriteInteger('MainForm', 'Top', Form1.Top);
+  Ini.Free;
 end;
 
 end.

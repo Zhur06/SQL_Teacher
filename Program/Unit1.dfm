@@ -11,6 +11,7 @@ object Form1: TForm1
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 16
@@ -379,6 +380,11 @@ object Form1: TForm1
       Caption = 'showTeacher'
       ShortCut = 112
       OnExecute = showTeacherExecute
+    end
+    object trueAnsw: TAction
+      Caption = 'trueAnsw'
+      ShortCut = 16468
+      OnExecute = trueAnswExecute
     end
   end
 end

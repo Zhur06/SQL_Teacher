@@ -68,7 +68,7 @@ begin
 end;
 
 procedure TForm2.Button2Click(Sender: TObject);
-var Ini: Tinifile; i, ggfchgh: integer;
+var Ini: Tinifile; i: integer;
 begin
   Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
   If not (Ini.ReadString('ComboBox', IntToStr(Ini.ReadInteger('ComboBox','MaxValue',0)), '') = '') then
@@ -102,6 +102,7 @@ begin
   Form1.MyScript1.Execute();
 
   Form1.ComboBox1.ItemIndex := Form1.ComboBox1.Items.Count - 1;
+  Form1.ComboBox1Change(Self);
 
 end;
 
