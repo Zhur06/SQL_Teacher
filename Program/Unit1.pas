@@ -14,7 +14,6 @@ type
   TForm1 = class(TForm)
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
-    goBtn: TButton;
     GroupBox5: TGroupBox;
     matchPanel: TPanel;
     DataSource1: TDataSource;
@@ -56,6 +55,13 @@ type
     RichEdit1: TRichEdit;
     settingsBtn: TButton;
     trueAnsw: TAction;
+    DBGrid2: TDBGrid;
+    Splitter5: TSplitter;
+    DataSource2: TDataSource;
+    MyQuery2: TMyQuery;
+    goBtn: TButton;
+    Panel1: TPanel;
+    GroupBox4: TGroupBox;
     procedure FormCreate(Sender: TObject);
     procedure goBtnClick(Sender: TObject);
     procedure doScriptBtnClick(Sender: TObject);
@@ -225,7 +231,8 @@ begin
 
   Form1.Left := Ini.ReadInteger('MainForm', 'Left', (Screen.WorkAreaWidth - Form1.Width) div 2);
   Form1.Top := Ini.ReadInteger('MainForm', 'Top', (Screen.WorkAreaHeight - Form1.Height) div 2);
-
+  Form1.Width := Ini.ReadInteger('MainForm', 'Width', Form1.Width);
+  Form1.Height := Ini.ReadInteger('MainForm', 'Height', Form1.Height);
   Ini.Free;
 
   fillTaskList;
@@ -298,6 +305,11 @@ begin
       saveAnswerBtn.Enabled := true;
       doScript.Enabled := true;
       checkBtn.Enabled := true;
+
+      MyQuery2.Close;
+      MyQuery2.SQL.Text := 'SELECT DISTINCT TABLE_NAME AS Таблицы FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ' + #39 + ComboBox1.Text + #39;
+      MyQuery2.Open;
+
     except
       MyEmbConnection1.Connected := false;
 
@@ -615,6 +627,8 @@ begin
   Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
   Ini.WriteInteger('MainForm', 'Left', Form1.Left);
   Ini.WriteInteger('MainForm', 'Top', Form1.Top);
+  Ini.WriteInteger('MainForm', 'Width', Form1.Width);
+  Ini.WriteInteger('MainForm', 'Height', Form1.Height);
   Ini.Free;
 end;
 

@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 112
-  Top = 1
+  Left = 412
+  Top = 237
   Width = 1218
   Height = 775
   Caption = 'SQLTeacher'
@@ -231,29 +231,67 @@ object Form1: TForm1
       Align = alTop
       Caption = '  SQL '#1082#1086#1076'  '
       TabOrder = 1
-      DesignSize = (
-        945
-        163)
-      object RichEdit1: TRichEdit
+      object Splitter5: TSplitter
+        Left = 753
+        Top = 18
+        Width = 5
+        Height = 143
+        Align = alRight
+      end
+      object Panel1: TPanel
         Left = 2
         Top = 18
-        Width = 941
+        Width = 751
         Height = 143
         Align = alClient
-        Enabled = False
         TabOrder = 0
-        OnChange = RichEdit1Change
+        DesignSize = (
+          751
+          143)
+        object RichEdit1: TRichEdit
+          Left = 1
+          Top = 1
+          Width = 749
+          Height = 141
+          Align = alClient
+          Enabled = False
+          TabOrder = 0
+          OnChange = RichEdit1Change
+        end
+        object goBtn: TButton
+          Left = 614
+          Top = 118
+          Width = 137
+          Height = 25
+          Anchors = [akRight, akBottom]
+          Caption = #1042#1099#1087#1086#1083#1085#1080#1090#1100
+          Enabled = False
+          TabOrder = 1
+          OnClick = goBtnClick
+        end
       end
-      object goBtn: TButton
-        Left = 800
-        Top = 126
-        Width = 137
-        Height = 25
-        Anchors = [akRight, akBottom]
-        Caption = #1042#1099#1087#1086#1083#1085#1080#1090#1100
-        Enabled = False
+      object GroupBox4: TGroupBox
+        Left = 758
+        Top = 18
+        Width = 185
+        Height = 143
+        Align = alRight
+        Caption = '  '#1044#1086#1089#1090#1091#1087#1085#1099#1077' '#1058#1072#1073#1083#1080#1094#1099'  '
         TabOrder = 1
-        OnClick = goBtnClick
+        object DBGrid2: TDBGrid
+          Left = 2
+          Top = 18
+          Width = 181
+          Height = 123
+          Align = alClient
+          DataSource = DataSource2
+          TabOrder = 0
+          TitleFont.Charset = DEFAULT_CHARSET
+          TitleFont.Color = clWindowText
+          TitleFont.Height = -13
+          TitleFont.Name = 'MS Sans Serif'
+          TitleFont.Style = []
+        end
       end
     end
     object GroupBox5: TGroupBox
@@ -386,5 +424,15 @@ object Form1: TForm1
       ShortCut = 16468
       OnExecute = trueAnswExecute
     end
+  end
+  object DataSource2: TDataSource
+    DataSet = MyQuery2
+    Left = 657
+    Top = 534
+  end
+  object MyQuery2: TMyQuery
+    Connection = MyEmbConnection1
+    Left = 697
+    Top = 534
   end
 end
