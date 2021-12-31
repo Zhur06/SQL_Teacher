@@ -136,6 +136,8 @@ begin
     GroupBox1.Color := Color;
     GroupBox2.Color := Color;
 
+    If Form2.Enabled then Form2.Color := Color;
+
     Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\settings.ini');
     Ini.WriteInteger('Colors', 'Panels', ColorDialog1.Color);
     Ini.Free;

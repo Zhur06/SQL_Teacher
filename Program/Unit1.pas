@@ -271,6 +271,7 @@ end;
 //----------------- Изменение БД -----------------------------------------------
 
 procedure TForm1.ComboBox1Change(Sender: TObject);
+var Ini: Tinifile; i, val: integer;
 begin
   MyEmbConnection1.Connected := false;
   goBtn.Enabled := false;
@@ -295,6 +296,18 @@ begin
       checkBtn.Enabled := true;
     except
       MyEmbConnection1.Connected := false;
+
+      Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
+      val := Ini.ReadInteger('ComboBox', 'MaxValue', 1);
+      For i := 1 to Ini.ReadInteger('ComboBox', 'MaxValue', 1) do
+        if Ini.ReadString('ComboBox', IntToStr(i), '') = ComboBox1.Text then
+        begin
+          Ini.DeleteKey('ComboBox', IntToStr(i));
+          val := val - 1;
+        end;
+      Ini.WriteInteger('ComboBox', 'MaxValue', val);
+      Ini.Free;
+
       ComboBox1.DeleteSelected;
       ComboBox1.ItemIndex := 0;
     end;
@@ -313,30 +326,35 @@ end;
 
 procedure TForm1.saveAnswerBtnClick(Sender: TObject);
 begin
-  SaveDialog1.InitialDir := ExtractFilePath(ParamStr(0));
-if SaveDialog1.Execute then
-  MyQuery1.SaveToXML(SaveDialog1.FileName);
-  CryptFile(SaveDialog1.FileName, '№');
+  MyQuery1.SaveToXML(ExtractFilePath(ParamStr(0)) + '\teachers\' + ListBox1.Items[ListBox1.ItemIndex] + '.xml');
+  CryptFile(ExtractFilePath(ParamStr(0)) + '\teachers\' + ListBox1.Items[ListBox1.ItemIndex] + '.xml', '№');
 end;
 
 //----------------- Удаление БД ------------------------------------------------
 
 procedure TForm1.dbDeleteBtnClick(Sender: TObject);
-var Ini: Tinifile; i, elIndx: integer;
+var Ini: Tinifile; i, val, elIndx: integer;
 begin
   if MyEmbConnection1.Connected = true then
   begin
     MyScript1.SQL.Text := 'DROP DATABASE ' + ComboBox1.Items[ComboBox1.ItemIndex];
     MyScript1.Execute;
 
+    Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
+    val := Ini.ReadInteger('ComboBox', 'MaxValue', 1);
+    For i := 1 to Ini.ReadInteger('ComboBox', 'MaxValue', 1) do
+      if Ini.ReadString('ComboBox', IntToStr(i), '') = ComboBox1.Text then
+      begin
+        Ini.DeleteKey('ComboBox', IntToStr(i));
+        val := val - 1;
+      end;
+    Ini.WriteInteger('ComboBox', 'MaxValue', val);
+    Ini.Free;
+     
     elIndx := ComboBox1.ItemIndex;
     ComboBox1.DeleteSelected;
     ComboBox1.ItemIndex := 0;
-
-    Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
-    For i := elIndx to Ini.ReadInteger('ComboBox', 'MaxValue', 1) do
-      Ini.WriteString('ComboBox', IntToStr(i), Ini.ReadString('ComboBox', intToStr(i + 1), ''));
-    Ini.Free;
+    ComboBox1Change(Self);
   end;
 end;
 
@@ -531,6 +549,8 @@ begin
   Ini.Free;
 end;
 
+//----------------- Ввод текста ------------------------------------------------
+
 procedure TForm1.RichEdit1Change(Sender: TObject);
 begin
   glowKeyWords('SELECT', keyFont, RichEdit1.Font);
@@ -568,6 +588,8 @@ begin
   glowKeyWords('SUM', keyFont, RichEdit1.Font);
   glowKeyWords('AVG', keyFont, RichEdit1.Font);
   glowKeyWords('UNION', keyFont, RichEdit1.Font);
+
+  matchPanel.Caption := 'Здесь будет результат проверки (Верно/НеВерно)';
 end;
                  
 procedure TForm1.settingsBtnClick(Sender: TObject);

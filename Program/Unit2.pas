@@ -4,7 +4,8 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls;
+  Dialogs, StdCtrls,
+  DAScript, MyScript;
 
 type
   TForm2 = class(TForm)
@@ -67,7 +68,7 @@ begin
 end;
 
 procedure TForm2.Button2Click(Sender: TObject);
-var Ini: Tinifile; i: integer;
+var Ini: Tinifile; i, ggfchgh: integer;
 begin
   Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
   If not (Ini.ReadString('ComboBox', IntToStr(Ini.ReadInteger('ComboBox','MaxValue',0)), '') = '') then
@@ -89,8 +90,18 @@ begin
   Form1.ComboBox1.AddItem(dbName.Text, Self);
   Ini.Free;
 
-  Form1.MyScript1.SQL.LoadFromFile(dbWay.Caption);
+  Form1.MyScript1.SQL.Clear;
+
+  Form1.MyScript1.SQL.Text := 'CREATE DATABASE IF NOT EXISTS ' + dbName.Text + ' CHARACTER SET cp1251 COLLATE cp1251_general_cs;';
   Form1.MyScript1.Execute();
+
+  Form1.MyEmbConnection1.Database := dbName.Text;
+
+  Form1.MyScript1.SQL.LoadFromFile(dbWay.Caption);
+
+  Form1.MyScript1.Execute();
+
+  Form1.ComboBox1.ItemIndex := Form1.ComboBox1.Items.Count - 1;
 
 end;
 

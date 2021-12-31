@@ -61,4 +61,9 @@ object Form2: TForm2
     TabOrder = 2
     OnClick = Button2Click
   end
+  object MyScript1: TMyScript
+    Connection = Form1.MyEmbConnection1
+    Left = 304
+    Top = 32
+  end
 end

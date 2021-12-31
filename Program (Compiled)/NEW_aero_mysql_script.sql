@@ -1,7 +1,10 @@
-CREATE DATABASE IF NOT EXISTS Aero;
+/*
+drop table pass_in_trip;
+drop table  passenger;
+drop table  trip;
+drop table  company;
 
-USE Aero;
-
+*/
 CREATE TABLE Company (
 	ID_comp int NOT NULL ,
 	name char (30) NOT NULL 
@@ -95,8 +98,8 @@ insert into Company values(2,'Aeroflot  ');
 insert into Company values(3,'Dale_avia ');
 insert into Company values(4,' air_France');
 insert into Company values(5,'British_AW');
-insert into Company values(6,'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
-insert into Company values(7,' пїЅпїЅпїЅпїЅпїЅпїЅ');
+insert into Company values(6,'Уральские авиалинии');
+insert into Company values(7,' Победа');
 insert into Company values(8,' Utair ');
 
 
@@ -137,18 +140,18 @@ insert into Passenger values(32,'Mullah Omar');
 insert into Passenger values(33,'John Travolta');
 insert into Passenger values(34,'Brad Pitt');
 insert into Passenger values(37,'Mullah Omar         ');
-insert into Passenger values(39,'пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ');
-insert into Passenger values(40,'пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ');
-insert into Passenger values(41,'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ!');
-insert into Passenger values(42,'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ ');
-insert into Passenger values(43,'пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
-insert into Passenger values(44,'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
-insert into Passenger values(45,'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
-insert into Passenger values(46,'ФёпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ');
-insert into Passenger values(47,'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ');
-insert into Passenger values(48,'пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ');
-insert into Passenger values(49,'пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
-insert into Passenger values(50,' пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ');
+insert into Passenger values(39,'Иванов Петя');
+insert into Passenger values(40,'Петров Иван');
+insert into Passenger values(41,'Владимир Владимирович!');
+insert into Passenger values(42,'Васильев Александр ');
+insert into Passenger values(43,'Петров Алексей');
+insert into Passenger values(44,'Смирнов Альберт');
+insert into Passenger values(45,'Михайлов Анатолий');
+insert into Passenger values(46,'Фёдоров Андрей');
+insert into Passenger values(47,'Соколов Антон');
+insert into Passenger values(48,'Яковлев Арсен');
+insert into Passenger values(49,'Попов Арсений');
+insert into Passenger values(50,' Васильев Александр');
 
 
 
