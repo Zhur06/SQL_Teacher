@@ -11,6 +11,7 @@ object Form1: TForm1
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
@@ -88,7 +89,6 @@ object Form1: TForm1
           Height = 37
           Anchors = [akLeft, akRight]
           Caption = #1042#1099#1087#1086#1083#1085#1080#1090#1100' '#1089#1082#1088#1080#1087#1090' '#1080#1079' '#1092#1072#1081#1083#1072
-          Enabled = False
           TabOrder = 1
           OnClick = doScriptBtnClick
         end
@@ -232,7 +232,7 @@ object Form1: TForm1
       Caption = '  SQL '#1082#1086#1076'  '
       TabOrder = 1
       object Splitter5: TSplitter
-        Left = 753
+        Left = 779
         Top = 18
         Width = 5
         Height = 143
@@ -241,17 +241,17 @@ object Form1: TForm1
       object Panel1: TPanel
         Left = 2
         Top = 18
-        Width = 751
+        Width = 777
         Height = 143
         Align = alClient
         TabOrder = 0
         DesignSize = (
-          751
+          777
           143)
         object RichEdit1: TRichEdit
           Left = 1
           Top = 1
-          Width = 749
+          Width = 775
           Height = 141
           Align = alClient
           Enabled = False
@@ -259,8 +259,8 @@ object Form1: TForm1
           OnChange = RichEdit1Change
         end
         object goBtn: TButton
-          Left = 614
-          Top = 118
+          Left = 648
+          Top = 110
           Width = 137
           Height = 25
           Anchors = [akRight, akBottom]
@@ -271,9 +271,9 @@ object Form1: TForm1
         end
       end
       object GroupBox4: TGroupBox
-        Left = 758
+        Left = 784
         Top = 18
-        Width = 185
+        Width = 159
         Height = 143
         Align = alRight
         Caption = '  '#1044#1086#1089#1090#1091#1087#1085#1099#1077' '#1058#1072#1073#1083#1080#1094#1099'  '
@@ -281,7 +281,7 @@ object Form1: TForm1
         object DBGrid2: TDBGrid
           Left = 2
           Top = 18
-          Width = 181
+          Width = 155
           Height = 123
           Align = alClient
           DataSource = DataSource2
@@ -434,5 +434,10 @@ object Form1: TForm1
     Connection = MyEmbConnection1
     Left = 697
     Top = 534
+  end
+  object MyQuery3: TMyQuery
+    Connection = MyEmbConnection1
+    Left = 657
+    Top = 478
   end
 end

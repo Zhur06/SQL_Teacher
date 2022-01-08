@@ -62,6 +62,7 @@ type
     goBtn: TButton;
     Panel1: TPanel;
     GroupBox4: TGroupBox;
+    MyQuery3: TMyQuery;
     procedure FormCreate(Sender: TObject);
     procedure goBtnClick(Sender: TObject);
     procedure doScriptBtnClick(Sender: TObject);
@@ -82,6 +83,7 @@ type
     procedure changeWordFont(var keyWord, txt: string; iill: integer; resFont, normalFont: TFont);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure trueAnswExecute(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -219,23 +221,9 @@ begin
     ListBox1.Items.Add(A[ii]);
 end;
 
-//----------------- Действия по созданию формы ---------------------------------
-
 procedure TForm1.FormCreate(Sender: TObject);
-var Ini: Tinifile; i: integer;
 begin
 
-  Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
-  For i := 1 to Ini.ReadInteger('ComboBox', 'MaxValue', 1) do
-    ComboBox1.AddItem(Ini.ReadString('ComboBox', IntToStr(i), ''), Self);
-
-  Form1.Left := Ini.ReadInteger('MainForm', 'Left', (Screen.WorkAreaWidth - Form1.Width) div 2);
-  Form1.Top := Ini.ReadInteger('MainForm', 'Top', (Screen.WorkAreaHeight - Form1.Height) div 2);
-
-  Ini.Free;
-
-  fillTaskList;
-  doCustomizationSettings;
 end;
 
 //----------------- Выполнение команды -----------------------------------------
@@ -289,7 +277,7 @@ begin
   doScriptBtn.Enabled := false;
   dbDeleteBtn.Enabled := false;
   saveAnswerBtn.Enabled := false;
-  doScript.Enabled := false;
+  //doScript.Enabled := false;
   checkBtn.Enabled := false;
 
   If not ((ComboBox1.Text[1] = '-') and (ComboBox1.Text[2] = '-')) then
@@ -302,7 +290,7 @@ begin
       doScriptBtn.Enabled := true;
       dbDeleteBtn.Enabled := true;
       saveAnswerBtn.Enabled := true;
-      doScript.Enabled := true;
+      //doScript.Enabled := true;
       checkBtn.Enabled := true;
 
       MyQuery2.Close;
@@ -626,7 +614,29 @@ begin
   Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
   Ini.WriteInteger('MainForm', 'Left', Form1.Left);
   Ini.WriteInteger('MainForm', 'Top', Form1.Top);
+  Ini.WriteInteger('MainForm', 'Width', Form1.Width);
+  Ini.WriteInteger('MainForm', 'Height', Form1.Height);
   Ini.Free;
+end;
+
+//----------------- Действия по активации формы --------------------------------
+
+procedure TForm1.FormActivate(Sender: TObject);
+var Ini: Tinifile; i: integer;
+begin         
+
+  Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
+  For i := 1 to Ini.ReadInteger('ComboBox', 'MaxValue', 1) do
+    ComboBox1.AddItem(Ini.ReadString('ComboBox', IntToStr(i), ''), Self);
+
+  Form1.Left := Ini.ReadInteger('MainForm', 'Left', (Screen.WorkAreaWidth - Form1.Width) div 2);
+  Form1.Top := Ini.ReadInteger('MainForm', 'Top', (Screen.WorkAreaHeight - Form1.Height) div 2);
+  Form1.Width := Ini.ReadInteger('MainForm', 'Width', Form1.Width);
+  Form1.Height := Ini.ReadInteger('MainForm', 'Height', Form1.Height);
+  Ini.Free;
+
+  fillTaskList;
+  doCustomizationSettings;
 end;
 
 end.

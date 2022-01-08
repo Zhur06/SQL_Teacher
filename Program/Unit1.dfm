@@ -11,6 +11,7 @@ object Form1: TForm1
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnActivate = FormActivate
   OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
@@ -88,7 +89,6 @@ object Form1: TForm1
           Height = 37
           Anchors = [akLeft, akRight]
           Caption = #1042#1099#1087#1086#1083#1085#1080#1090#1100' '#1089#1082#1088#1080#1087#1090' '#1080#1079' '#1092#1072#1081#1083#1072
-          Enabled = False
           TabOrder = 1
           OnClick = doScriptBtnClick
         end
@@ -434,5 +434,10 @@ object Form1: TForm1
     Connection = MyEmbConnection1
     Left = 697
     Top = 534
+  end
+  object MyQuery3: TMyQuery
+    Connection = MyEmbConnection1
+    Left = 657
+    Top = 478
   end
 end
