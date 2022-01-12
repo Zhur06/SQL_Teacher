@@ -39,7 +39,7 @@ var
   i, i1: integer;
   NameExists, Nul: boolean;
 begin
-  AssignFile(F, ExtractFilePath(ParamStr(0)) + '\meta_inf\db.txt');
+  AssignFile(F, ExtractFilePath(ParamStr(0)) + '\meta_inf\db');
 
   Reset(F);
 

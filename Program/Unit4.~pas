@@ -16,6 +16,7 @@ type
     userPassword: TEdit;
     Button1: TButton;
     procedure Button1Click(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -118,6 +119,12 @@ begin
   Form1.Label7.Caption := userName.Text;
   Form4.Close;
   end;
+end;
+
+procedure TForm4.FormActivate(Sender: TObject);
+begin
+  Left := (Screen.WorkAreaWidth - Width) div 2;
+  Top := (Screen.WorkAreaHeight - Height) div 2;
 end;
 
 end.

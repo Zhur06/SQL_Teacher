@@ -229,7 +229,7 @@ var
   i: integer;
   inData: boolean;
 begin
-  AssignFile(F2, ExtractFilePath(ParamStr(0)) + '\meta_inf\db.txt');
+  AssignFile(F2, ExtractFilePath(ParamStr(0)) + '\meta_inf\db');
 
   Reset(F2);
   If not EOF(F2) then
@@ -532,7 +532,7 @@ begin
 
     if Label7.Caption <> 'Вход не выполнен' then
     begin
-      AssignFile(F2, ExtractFilePath(ParamStr(0)) + '\meta_inf\db.txt');
+      AssignFile(F2, ExtractFilePath(ParamStr(0)) + '\meta_inf\db');
 
       Reset(F2);
       If not EOF(F2) then
@@ -589,7 +589,7 @@ begin
   matchPanel.Caption := 'Задача решена верно';
 if Label7.Caption <> 'Вход не выполнен' then
 begin
-  AssignFile(F2, ExtractFilePath(ParamStr(0)) + '\meta_inf\db.txt');
+  AssignFile(F2, ExtractFilePath(ParamStr(0)) + '\meta_inf\db');
 
   Reset(F2);
   If not EOF(F2) then

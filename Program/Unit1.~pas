@@ -581,6 +581,10 @@ begin
   end;
 end;
 procedure TForm1.trueAnswExecute(Sender: TObject);
+var
+  F2: File of Unit4.Arr;
+  data: Unit4.Arr;
+  i, i1: integer;
 begin
   matchPanel.Caption := 'Задача решена верно';
 if Label7.Caption <> 'Вход не выполнен' then

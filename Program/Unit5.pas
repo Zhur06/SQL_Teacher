@@ -35,7 +35,7 @@ begin
   Left := (Screen.WorkAreaWidth - Width) div 2;
   Top := (Screen.WorkAreaHeight - Height) div 2;
 
-  AssignFile(F, ExtractFilePath(ParamStr(0)) + '\meta_inf\db.txt');
+  AssignFile(F, ExtractFilePath(ParamStr(0)) + '\meta_inf\db');
 
   Reset(F);
 
