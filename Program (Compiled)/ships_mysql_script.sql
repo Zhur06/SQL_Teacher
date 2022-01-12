@@ -1,7 +1,3 @@
-CREATE DATABASE IF NOT EXISTS Ships;
-
-USE Ships;
-
 CREATE TABLE IF NOT EXISTS Battles (
 	name varchar (20) NOT NULL ,
 	date datetime NOT NULL 

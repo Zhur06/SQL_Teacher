@@ -1,3 +1,7 @@
+CREATE DATABASE IF NOT EXISTS Computer;
+
+USE Computer;
+
 CREATE TABLE IF NOT EXISTS Laptop (
 	code int NOT NULL ,
 	model varchar (50) NOT NULL ,

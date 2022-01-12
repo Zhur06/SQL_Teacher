@@ -62,7 +62,12 @@ type
     goBtn: TButton;
     Panel1: TPanel;
     GroupBox4: TGroupBox;
-    MyQuery3: TMyQuery;
+    GroupBox6: TGroupBox;
+    Label6: TLabel;
+    Label7: TLabel;
+    Button1: TButton;
+    Splitter6: TSplitter;
+    Button2: TButton;
     procedure FormCreate(Sender: TObject);
     procedure goBtnClick(Sender: TObject);
     procedure doScriptBtnClick(Sender: TObject);
@@ -83,12 +88,12 @@ type
     procedure changeWordFont(var keyWord, txt: string; iill: integer; resFont, normalFont: TFont);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure trueAnswExecute(Sender: TObject);
-    procedure FormActivate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private declarations }
   public
     keyFont: TFont;
-    user: string;
     { Public declarations }
   end;
 
@@ -99,7 +104,7 @@ implementation
 
 {$R *.dfm}
 
-Uses IniFiles, Unit2, Unit3;
+Uses Math, IniFiles, Unit2, Unit3, Unit4, Unit5;
 
 //----------------- Изменение шрифта -------------------------------------------
 
@@ -215,16 +220,64 @@ end;
 //----------------- Заполнение списка заданий ----------------------------------
 
 procedure TForm1.fillTaskList();
-var ii: integer; A: Arr;
+var
+  ii: integer;
+  A: Arr;
+
+  F2: File of Unit4.Arr;
+  data: Unit4.Arr;
+  i: integer;
+  inData: boolean;
 begin
+  AssignFile(F2, ExtractFilePath(ParamStr(0)) + '\meta_inf\db.txt');
+
+  Reset(F2);
+  If not EOF(F2) then
+  Read(F2, data);
+
+  CloseFile(F2);
+
   A := Find(ExtractFilePath(ParamStr(0)) + '\teachers', '*.txt');
   for ii := 0 to length(A) - 1 do
+  begin
     ListBox1.Items.Add(A[ii]);
+
+    inData := false;
+
+    For i := 2 to Length(data) do
+      if data[i][0] = A[ii] then inData := true;
+
+    if not inData then
+    begin
+      For i := 2 to Length(data) do if data[i][0] = '' then begin data[i][0] := A[ii]; BREAK; end;
+    end;
+  end;
+
+  Reset(F2);
+
+  Write(F2, data);
+
+  CloseFile(F2);
 end;
 
+//----------------- Действия по созданию формы ---------------------------------
+
 procedure TForm1.FormCreate(Sender: TObject);
+var Ini: Tinifile; i: integer;
 begin
 
+  Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
+  For i := 1 to Ini.ReadInteger('ComboBox', 'MaxValue', 1) do
+    ComboBox1.AddItem(Ini.ReadString('ComboBox', IntToStr(i), ''), Self);
+
+  Form1.Left := Ini.ReadInteger('MainForm', 'Left', (Screen.WorkAreaWidth - Form1.Width) div 2);
+  Form1.Top := Ini.ReadInteger('MainForm', 'Top', (Screen.WorkAreaHeight - Form1.Height) div 2);
+  Form1.Width := Ini.ReadInteger('MainForm', 'Width', Form1.Width);
+  Form1.Height := Ini.ReadInteger('MainForm', 'Height', Form1.Height);
+  Ini.Free;
+
+  fillTaskList;
+  doCustomizationSettings;
 end;
 
 //----------------- Выполнение команды -----------------------------------------
@@ -278,7 +331,7 @@ begin
   doScriptBtn.Enabled := false;
   dbDeleteBtn.Enabled := false;
   saveAnswerBtn.Enabled := false;
-  //doScript.Enabled := false;
+  doScript.Enabled := false;
   checkBtn.Enabled := false;
 
   If not ((ComboBox1.Text[1] = '-') and (ComboBox1.Text[2] = '-')) then
@@ -291,7 +344,7 @@ begin
       doScriptBtn.Enabled := true;
       dbDeleteBtn.Enabled := true;
       saveAnswerBtn.Enabled := true;
-      //doScript.Enabled := true;
+      doScript.Enabled := true;
       checkBtn.Enabled := true;
 
       MyQuery2.Close;
@@ -439,7 +492,14 @@ end;
 //----------------- Проверка задания -------------------------------------------
 
 procedure TForm1.checkBtnClick(Sender: TObject);
-var F: file of char; c: char; answ, resul: string;
+var
+  F: file of char;
+  c: char;
+  answ, resul: string;
+
+  F2: File of Unit4.Arr;
+  data: Unit4.Arr;
+  i, i1: integer;
 begin
   MyQuery1.SaveToXML('YourResult.xml');
 
@@ -469,6 +529,43 @@ begin
   if answ = resul then
   begin
     matchPanel.Caption := 'Задача решена верно';
+
+    if Label7.Caption <> 'Вход не выполнен' then
+    begin
+      AssignFile(F2, ExtractFilePath(ParamStr(0)) + '\meta_inf\db.txt');
+
+      Reset(F2);
+      If not EOF(F2) then
+        Read(F2, data);
+
+      CloseFile(F2);
+
+      For i := 1 to Min(Length(data[0]), Length(data[1])) do
+      begin
+        if data[0][i] = Label7.Caption then
+        begin
+          // i - индекс нужной строки
+          For i1 := 2 to Length(data) do
+          begin
+            if data[i1][0] = ListBox1.Items[ListBox1.ItemIndex] then
+            begin
+              data[i1][i] := 'Верно';
+
+              Reset(F2);
+
+              Write(F2, data);
+
+              CloseFile(F2);
+
+              BREAK;
+            end;
+          end;
+
+        end;
+      end;
+
+
+    end;
   end
   else
   begin
@@ -484,8 +581,44 @@ begin
   end;
 end;
 procedure TForm1.trueAnswExecute(Sender: TObject);
+var
+  F2: File of Unit4.Arr;
+  data: Unit4.Arr;
+  i, i1: integer;
 begin
   matchPanel.Caption := 'Задача решена верно';
+if Label7.Caption <> 'Вход не выполнен' then
+begin
+  AssignFile(F2, ExtractFilePath(ParamStr(0)) + '\meta_inf\db.txt');
+
+  Reset(F2);
+  If not EOF(F2) then
+    Read(F2, data);
+
+  CloseFile(F2);
+
+  For i := 1 to Min(Length(data[0]), Length(data[1])) do
+  begin
+    if data[0][i] = Label7.Caption then
+    begin
+      For i1 := 2 to Length(data) do
+      begin
+        if data[i1][0] = ListBox1.Items[ListBox1.ItemIndex] then
+        begin
+          data[i1][i] := 'Верно';
+
+          Reset(F2);
+
+          Write(F2, data);
+
+          CloseFile(F2);
+
+          BREAK;
+        end;
+      end;
+    end;
+  end;
+end;
 end;
 
 //----------------- Применение пользовательских настроек -----------------------
@@ -523,10 +656,14 @@ begin
   saveAnswerBtn.Height := Panel2.Height;
   dbDeleteBtn.Height := Panel2.Height;
   settingsBtn.Height := Panel2.Height;
+  Button2.Height := Panel2.Height;
 
   dbDeleteBtn.Top := 4 + (Panel2.Height + 8);
   doScriptBtn.Top := 4 + (Panel2.Height + 8) * 2;
-  saveAnswerBtn.Top  := 4 + (Panel2.Height + 8) * 3;
+  saveAnswerBtn.Top := 4 + (Panel2.Height + 8) * 3;
+  Button2.Top := 4 + (Panel2.Height + 8) * 4;
+
+  Label7.Left := Label6.Left + Label6.Width + 4;
 
   RichEdit1.Color := Ini.ReadInteger('Colors', 'Memos', clWindow);
   ListBox1.Color := Ini.ReadInteger('Colors', 'Memos', clWindow);
@@ -620,24 +757,33 @@ begin
   Ini.Free;
 end;
 
-//----------------- Действия по активации формы --------------------------------
+//----------------- Открытие окна регистрации ----------------------------------
 
-procedure TForm1.FormActivate(Sender: TObject);
-var Ini: Tinifile; i: integer;
-begin         
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  Form4 := TForm4.Create(Self);
 
-  Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\1.ini');
-  For i := 1 to Ini.ReadInteger('ComboBox', 'MaxValue', 1) do
-    ComboBox1.AddItem(Ini.ReadString('ComboBox', IntToStr(i), ''), Self);
+  with Form4 do
+  begin
+    Font.Assign(Form1.Font);
+    userPassword.Left := Form4.Label2.Left + Form4.Label2.Width + 4;
+    userName.Left := userPassword.Left;
 
-  Form1.Left := Ini.ReadInteger('MainForm', 'Left', (Screen.WorkAreaWidth - Form1.Width) div 2);
-  Form1.Top := Ini.ReadInteger('MainForm', 'Top', (Screen.WorkAreaHeight - Form1.Height) div 2);
-  Form1.Width := Ini.ReadInteger('MainForm', 'Width', Form1.Width);
-  Form1.Height := Ini.ReadInteger('MainForm', 'Height', Form1.Height);
-  Ini.Free;
+    userPassword.Top := userName.Height + userName.Top + 8;
+    Form4.Label2.Top := userPassword.Top;
 
-  fillTaskList;
-  doCustomizationSettings;
+    Button1.Height := userPassword.Height;
+  end;
+
+  Form4.Show;
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+begin
+ Form5 := TForm5.Create(Self);
+ Form5.Font.Assign(Form1.Font);
+
+ Form5.Show;
 end;
 
 end.

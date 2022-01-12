@@ -60,7 +60,7 @@ begin
 
     Form3.Font := Font;
 
-    If Form2.Enabled then Form2.Font := Font;
+    If Assigned(Form2) then Form2.Font := Font;
 
     Ini.WriteString('Font', 'Name', Font.Name);
     Ini.WriteInteger('Font', 'Size', Font.Size);

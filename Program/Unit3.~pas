@@ -45,17 +45,22 @@ Uses IniFiles, Unit1, Unit2;
 
 procedure TForm3.changeMainFontBtnClick(Sender: TObject);
 var Ini : TIniFile;
-begin
+begin      
+  Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\settings.ini');
+
+  FontDialog1.Font.Name := Ini.ReadString('Font', 'Name', FontDialog1.Font.Name);
+  FontDialog1.Font.Size := Ini.ReadInteger('Font', 'Size', FontDialog1.Font.Size);
+  FontDialog1.Font.Charset := Ini.ReadInteger('Font', 'Charset', FontDialog1.Font.Charset);
+  FontDialog1.Font.Color := Ini.ReadInteger('Font', 'Color', FontDialog1.Font.Color);
+
   If FontDialog1.Execute then
   with FontDialog1 do
   begin
     Form1.Font := Font;
 
-    Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\settings.ini');
-
     Form3.Font := Font;
 
-    If Form2.Enabled then Form2.Font := Font;
+    If Enabled(Form2) then Form2.Font := Font;
 
     Ini.WriteString('Font', 'Name', Font.Name);
     Ini.WriteInteger('Font', 'Size', Font.Size);
@@ -69,6 +74,13 @@ end;
 procedure TForm3.changeSecondFontBtnClick(Sender: TObject);
 var Ini : TIniFile;
 begin
+  Ini := TIniFile.Create(ExtractFilePath(ParamStr(0)) + '\meta_inf\settings.ini');
+
+  FontDialog1.Font.Name := Ini.ReadString('keyFont', 'Name', FontDialog1.Font.Name);
+  FontDialog1.Font.Size := Ini.ReadInteger('keyFont', 'Size', FontDialog1.Font.Size);
+  FontDialog1.Font.Charset := Ini.ReadInteger('keyFont', 'Charset', FontDialog1.Font.Charset);
+  FontDialog1.Font.Color := Ini.ReadInteger('keyFont', 'Color', FontDialog1.Font.Color);
+
   If FontDialog1.Execute then
   with FontDialog1 do
   begin

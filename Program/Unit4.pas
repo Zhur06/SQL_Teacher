@@ -4,19 +4,19 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, DB, DBAccess, MyAccess, MyEmbConnection, MemDS, Grids,
-  DBGrids;
+  Dialogs, StdCtrls;
 
 type
+  arr = array[0..51] { Кол-во задач + 2 } of array[0..39] { Кол-во учеников } of string[50] { Длина ника и/или пароля };
+
   TForm4 = class(TForm)
-    Login: TLabel;
-    Password: TLabel;
-    Button1: TButton;
-    DBGrid1: TDBGrid;
-    DataSource1: TDataSource;
+    Label1: TLabel;
+    Label2: TLabel;
     userName: TEdit;
     userPassword: TEdit;
+    Button1: TButton;
     procedure Button1Click(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
   private
     { Private declarations }
   public
@@ -28,37 +28,103 @@ var
 
 implementation
 
-USES Unit1;
+uses Math, Unit1;
 
 {$R *.dfm}
 
 procedure TForm4.Button1Click(Sender: TObject);
+var
+  F: file of arr;
+  data: arr;
+  i, i1: integer;
+  NameExists, Nul: boolean;
 begin
-  Form1 := TForm1.Create(Self);
+  AssignFile(F, ExtractFilePath(ParamStr(0)) + '\meta_inf\db.txt');
 
-   Form1.MyEmbConnection1.Database := 'auth';
+  Reset(F);
 
-  Form1.MyEmbConnection1.Connected := true;
+  Nul := false;
 
-  Form1.MyQuery3.Close;
+  If not EOF(F) then
+    Read(F, data)
+  else Nul := true;
 
-  Form1.MyQuery3.SQL.Text := 'SELECT * FROM reg WHERE userName = ' + #39 + userName.Text + #39;
+  CloseFile(F);
 
-  Form1.MyQuery3.Open;
+//  Структура data
+//
+//  UserName - Password - Задачи
+//  0          1          2..
 
-  if DBGrid1.Fields[2].Text = '' then
+  NameExists := false;
+
+  if not Nul then                                                     // Вход
+  For i := 1 to Min(Length(data[0]), Length(data[1])) do
   begin
-    Form1.MyScript1.SQL.Text := 'INSERT INTO reg (userName, userPassword) VALUES (' + #39 + userName.Text + #39 + ', ' + #39 + userPassword.Text + #39 + ')';
-    Form1.MyScript1.Execute;
+    if data[0][i] = userName.Text then
+    begin
+      NameExists := true;
+
+      if userPassword.Text = data[1][i] then
+      begin
+        //Все ок
+        Form1.Label7.Caption := userName.Text;
+        Form4.Close;
+
+        BREAK;
+      end
+      else
+      begin
+        ShowMessage('Пароль неверный');
+        userPassword.Text := '';
+      end;
+    end;
+
   end;
 
-  if DBGrid1.Fields[2].Text = userPassword.Text then
+  if not NameExists then
   begin
-    Form1.MyEmbConnection1.Connected := false;
-    Form1.user := userName;
-    Form1.Show;
-  end
-  else ShowMessage('Пароль неверный');
+  if Nul then                                                               // Регистрация
+  begin
+    data[0][0] := 'UserName';
+    data[1][0] := 'UserPassword';
+
+    For i := 2 to Length(data) - 1 do
+    begin
+      For i1 := 1 to Length(data[i]) - 1 do
+      begin
+        data[i][i1] := 'Неверно';
+      end;
+    end;
+  end;
+
+    For i := 1  to Length(data[0]) do
+      if data[0][i] = '' Then BREAK;
+
+    data[0][i] := userName.Text;
+    data[1][i] := userPassword.Text;
+          {
+    For i := 2 to Length(data) do
+    begin
+      data[i][Length(data[1]) + 1] := 'Неверно';
+    end;  }
+
+
+  Reset(F);
+
+  Write(F, data);
+
+  CloseFile(F);
+
+  Form1.Label7.Caption := userName.Text;
+  Form4.Close;
+  end;
+end;
+
+procedure TForm4.FormActivate(Sender: TObject);
+begin
+  Left := (Screen.WorkAreaWidth - Width) div 2;
+  Top := (Screen.WorkAreaHeight - Height) div 2;
 end;
 
 end.
