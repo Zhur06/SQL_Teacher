@@ -4,12 +4,16 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, Grids;
+  Dialogs, Grids, StdCtrls;
 
 type
   TForm5 = class(TForm)
     StringGrid1: TStringGrid;
+    Button1: TButton;
+    Button2: TButton;
     procedure FormActivate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -21,42 +25,57 @@ var
 
 implementation
 
-Uses Math, Unit4;
+Uses Math, Unit1;
 
 {$R *.dfm}
 
 procedure TForm5.FormActivate(Sender: TObject);
 var
-  F: file of Unit4.arr;
-  data: Unit4.arr;
-  i, ii: integer;
-  Nul: boolean;
+  F2: file of Tas;
+  data2: array of tas;
+  i: integer;
 begin
   Left := (Screen.WorkAreaWidth - Width) div 2;
   Top := (Screen.WorkAreaHeight - Height) div 2;
 
-  AssignFile(F, ExtractFilePath(ParamStr(0)) + '\meta_inf\db');
+  AssignFile(F2, ExtractFilePath(ParamStr(0)) + '\meta_inf\tas');
 
-  Reset(F);
+  Reset(F2);
 
-  Nul := false;
+  While not EOF(F2) do
+  begin
+    SetLength(data2, Length(data2) + 1);
+    Read(F2, data2[Length(data2) - 1]);
+  end;
 
-  If not EOF(F) then
-    Read(F, data)
-  else Nul := true;
-
-  CloseFile(F);
+  CloseFile(F2);
 
   // Перенос данных в таблицу
-if not Nul then
-begin
-  StringGrid1.ColCount := Length(data);
-  StringGrid1.RowCount := Length(data[1]);
 
-  For i := 0 to Length(data) do
-    For ii := 0 to Length(data[i]) do
-      StringGrid1.Cols[i][ii] := data[i][ii];
+if Length(data2) >= 1 then
+begin
+  StringGrid1.ColCount := 2;
+  StringGrid1.RowCount := Length(data2);
+
+  StringGrid1.Cols[0][0] := 'Ученик';
+  StringGrid1.Cols[1][0] := 'Сделанное задание';
+
+  For i := 0 to Length(data2) do
+  begin
+    StringGrid1.Cols[0][i + 1] := data2[i].uchName;
+    StringGrid1.Cols[1][i + 1] := data2[i].taskName;
+  end;
 end;
+end;
+
+procedure TForm5.Button1Click(Sender: TObject);
+begin
+  StringGrid1.DefaultColWidth := StringGrid1.DefaultColWidth + 16;
+end;
+
+procedure TForm5.Button2Click(Sender: TObject);
+begin
+  StringGrid1.DefaultColWidth := StringGrid1.DefaultColWidth - 16;
 end;
 
 end.

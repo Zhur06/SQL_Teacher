@@ -11,6 +11,16 @@ uses
 type
   Arr = array of string;
 
+  Uch = record
+    uchName: string[50];
+    uchPassword: string[50];
+  end;
+
+  Tas = record
+    uchName: string[50];
+    taskName: string[50];
+  end;
+
   TForm1 = class(TForm)
     GroupBox2: TGroupBox;
     GroupBox3: TGroupBox;
@@ -223,41 +233,12 @@ procedure TForm1.fillTaskList();
 var
   ii: integer;
   A: Arr;
-
-  F2: File of Unit4.Arr;
-  data: Unit4.Arr;
-  i: integer;
-  inData: boolean;
 begin
-  AssignFile(F2, ExtractFilePath(ParamStr(0)) + '\meta_inf\db.txt');
-
-  Reset(F2);
-  If not EOF(F2) then
-  Read(F2, data);
-
-  CloseFile(F2);
-
   A := Find(ExtractFilePath(ParamStr(0)) + '\teachers', '*.txt');
   for ii := 0 to length(A) - 1 do
   begin
     ListBox1.Items.Add(A[ii]);
-
-    inData := false;
-
-    For i := 2 to Length(data) do
-      if data[i][0] = A[ii] then inData := true;
-
-    if not inData then
-    begin
-      For i := 2 to Length(data) do if data[i][0] = '' then begin data[i][0] := A[ii]; BREAK; end;
-    end;
   end;
-
-  Reset(F2);
-
-  Write(F2, data);
-
-  CloseFile(F2);
 end;
 
 //----------------- Действия по созданию формы ---------------------------------
@@ -497,9 +478,11 @@ var
   c: char;
   answ, resul: string;
 
-  F2: File of Unit4.Arr;
-  data: Unit4.Arr;
-  i, i1: integer;
+  F1: File of Uch;
+  F2: File of Tas;
+  data1: Array of uch;
+  data2: Array of tas;
+  i: integer;
 begin
   MyQuery1.SaveToXML('YourResult.xml');
 
@@ -532,39 +515,38 @@ begin
 
     if Label7.Caption <> 'Вход не выполнен' then
     begin
-      AssignFile(F2, ExtractFilePath(ParamStr(0)) + '\meta_inf\db.txt');
+      AssignFile(F1, ExtractFilePath(ParamStr(0)) + '\meta_inf\uch');
+      AssignFile(F2, ExtractFilePath(ParamStr(0)) + '\meta_inf\tas');
 
+      Reset(F1);
       Reset(F2);
-      If not EOF(F2) then
-        Read(F2, data);
 
-      CloseFile(F2);
-
-      For i := 1 to Min(Length(data[0]), Length(data[1])) do
+      While not EOF(F1) do
       begin
-        if data[0][i] = Label7.Caption then
-        begin
-          // i - индекс нужной строки
-          For i1 := 2 to Length(data) do
-          begin
-            if data[i1][0] = ListBox1.Items[ListBox1.ItemIndex] then
-            begin
-              data[i1][i] := 'Верно';
-
-              Reset(F2);
-
-              Write(F2, data);
-
-              CloseFile(F2);
-
-              BREAK;
-            end;
-          end;
-
-        end;
+        SetLength(data1, Length(data1) + 1);
+        Read(F1, data1[Length(data1)]);
       end;
 
+      While not EOF(F2) do
+      begin
+        SetLength(data2, Length(data2) + 1);
+        Read(F2, data2[Length(data2)]);
+      end;
 
+      CloseFile(F1);
+      CloseFile(F2);
+
+      SetLength(data2, length(data2) + 1);
+
+      data2[length(data2)].uchName := Label7.Caption;
+      data2[length(data2)].taskName := ListBox1.Items[ListBox1.ItemIndex];
+
+      Rewrite(F2);
+
+      For i := 0 to Length(data2) do
+        Write(F2, data2[i]);
+
+      CloseFile(F2);
     end;
   end
   else
@@ -582,42 +564,47 @@ begin
 end;
 procedure TForm1.trueAnswExecute(Sender: TObject);
 var
-  F2: File of Unit4.Arr;
-  data: Unit4.Arr;
-  i, i1: integer;
+  F1: File of Uch;
+  F2: File of Tas;
+  data1: Array of uch;
+  data2: Array of tas;
+  i: integer;
 begin
   matchPanel.Caption := 'Задача решена верно';
 if Label7.Caption <> 'Вход не выполнен' then
 begin
-  AssignFile(F2, ExtractFilePath(ParamStr(0)) + '\meta_inf\db.txt');
+    AssignFile(F1, ExtractFilePath(ParamStr(0)) + '\meta_inf\uch');
+      AssignFile(F2, ExtractFilePath(ParamStr(0)) + '\meta_inf\tas');
 
-  Reset(F2);
-  If not EOF(F2) then
-    Read(F2, data);
+      Reset(F1);
+      Reset(F2);
 
-  CloseFile(F2);
-
-  For i := 1 to Min(Length(data[0]), Length(data[1])) do
-  begin
-    if data[0][i] = Label7.Caption then
-    begin
-      For i1 := 2 to Length(data) do
+      While not EOF(F1) do
       begin
-        if data[i1][0] = ListBox1.Items[ListBox1.ItemIndex] then
-        begin
-          data[i1][i] := 'Верно';
-
-          Reset(F2);
-
-          Write(F2, data);
-
-          CloseFile(F2);
-
-          BREAK;
-        end;
+        SetLength(data1, Length(data1) + 1);
+        Read(F1, data1[Length(data1)]);
       end;
-    end;
-  end;
+
+      While not EOF(F2) do
+      begin
+        SetLength(data2, Length(data2) + 1);
+        Read(F2, data2[Length(data2)]);
+      end;
+
+      CloseFile(F1);
+      CloseFile(F2);
+
+      SetLength(data2, length(data2) + 1);
+
+      data2[length(data2)].uchName := Label7.Caption;
+      data2[length(data2)].taskName := ListBox1.Items[ListBox1.ItemIndex];
+
+      Rewrite(F2);
+
+      For i := 0 to Length(data2) do
+        Write(F2, data2[i]);
+
+      CloseFile(F2);
 end;
 end;
 
